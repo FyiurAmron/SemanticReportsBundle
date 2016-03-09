@@ -28,5 +28,6 @@
         "psr-0" : { "Eidsonator\\SemanticReportsBundle": ""}
         
     },
+    "target-dir": "Eidsonator/SemanticReportsBundle",
     "minimum-stability": "dev"
 }
