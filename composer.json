@@ -25,12 +25,8 @@
         "google/apiclient": "1.0.*@beta"
     },
     "autoload": {
-        "files": [
-            "lib/adodb/pivottable.inc.php"
-        ],
-        "classmap": [
-            "vendor/jdorn/file-system-cache/"
-        ]
+        "psr-0" : { "Eidsonator\\SemanticReportsBundle": ""}
+        
     },
     "minimum-stability": "dev"
 }
