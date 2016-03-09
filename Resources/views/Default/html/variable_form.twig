@@ -102,18 +102,8 @@ $(function() {
 				});
         var text = ' : '+t.join(', ');
         $('#variables-holder').html(text);
-//        $('#variables-header span.glyphicon').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
     });
     $('input').trigger('change');
-    {#.on('show.bs.collapse', function() {#}
-        {#$('#variables-selected').collapse('hide');#}
-        {#$('#variables-holder').text('');#}
-        {#$('#variables-header span.glyphicon').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');#}
-    {#})#}
-		{#{% if collapse_configuration %}#}
-		{#.trigger('hide.bs.collapse')#}
-		{#{% endif %};#}
-
 	$('.daterangepicker_holder',$('#variable_form')).each(function() {
         moment.lang(window.navigator.language);
 
@@ -142,7 +132,7 @@ $(function() {
 			}
 		);
 	});
-	$('.datepicker_holder',$('#variable_form')).each(function() {
+	$('.datepicker_holder', $('#variable_form')).each(function() {
 		$(this).datepicker();
 	});
 
@@ -165,6 +155,7 @@ $(function() {
             }
         }
     });
-		
+
+    $('.cancelBtn').click();
 });
 </script>
