@@ -1,9 +1,9 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Classes\ReportFormats;
+namespace Eidsonator\SemanticReportsBundle\Classes\ReportFormats;
 
-use Eidsonator\ReportsBundle\lib\PhpReports\ReportFormatBase;
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\ReportFormatBase;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 use Symfony\Component\HttpFoundation\Request;
 
 class DebugReportFormat extends ReportFormatBase

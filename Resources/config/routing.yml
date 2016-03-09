@@ -1,61 +1,61 @@
 bapm_reports_homepage:
     path:     /reports
-    defaults: { _controller: EidsonatorReportsBundle:Default:listReports }
+    defaults: { _controller: EidsonatorSemanticReportsBundle:Default:listReports }
 
 bapm_reports_list_json:
     path:       /reportListJson
-    defaults:   { _controller: EidsonatorReportsBundle:Default:listReportsJson }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:listReportsJson }
     options:
         expose: true
 
 bapm_reports_display:
     path:       /report/html
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayHtml }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayHtml }
 
 bapm_generate_report:
     path:       /report/generate
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayHtml }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayHtml }
 
 bapm_generate_xml:
     path:       /report/xml
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayXml }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayXml }
 
 bapm_generate_debug:
     path:       /report/debug
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayDebug }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayDebug }
 
 bapm_generate_chart:
     path:       /report/chart
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayChart }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayChart }
 
 bapm_generate_xlsx:
     path:       /report/xlsx
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayXlsx }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayXlsx }
 
 bapm_generate_xls:
     path:       /report/xls
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayXls }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayXls }
 
 bapm_generate_csv:
     path:       /report/csv
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayCsv }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayCsv }
 
 bapm_generate_table:
     path:       /report/table
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayTable }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayTable }
 
 bapm_generate_text:
     path:       /report/text
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayText }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayText }
 
 bapm_report_path:
     path:       /report
-    defaults:   { _controller: EidsonatorReportsBundle:Default:displayHtml }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayHtml }
 
 bapm_report_edit:
     path:       /report/edit
-    defaults:   { _controller: EidsonatorReportsBundle:Default:edit }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:edit }
 
 bapm_report_email:
     path:       /report/email
-    defaults:   { _controller: EidsonatorReportsBundle:Default:email }
+    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:email }

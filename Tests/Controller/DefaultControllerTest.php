@@ -1,6 +1,6 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Tests\Controller;
+namespace Eidsonator\SemanticReportsBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Classes\Filters;
+namespace Eidsonator\SemanticReportsBundle\Classes\Filters;
 
-use Eidsonator\ReportsBundle\lib\PhpReports\FilterBase;
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\FilterBase;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 class linkFilter extends FilterBase
 {

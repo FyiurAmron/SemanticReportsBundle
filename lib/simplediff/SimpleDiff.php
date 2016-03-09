@@ -18,7 +18,7 @@
 	which can easily be styled with CSS.  
 */
 
-namespace Eidsonator\ReportsBundle\lib\simplediff;
+namespace Eidsonator\SemanticReportsBundle\lib\simplediff;
 
 class SimpleDiff
 {

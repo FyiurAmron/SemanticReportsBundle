@@ -1,11 +1,11 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\lib\PhpReports;
+namespace Eidsonator\SemanticReportsBundle\lib\PhpReports;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\Container;
-use Eidsonator\ReportsBundle\Classes\Headers;
-use Eidsonator\ReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
+use Eidsonator\SemanticReportsBundle\Classes\Headers;
+use Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
 
 class Report extends ContainerAware
 {
@@ -292,7 +292,7 @@ class Report extends ContainerAware
 
     public function parseHeader($name, $value, $dataSet = null)
     {
-        $className = 'Eidsonator\\ReportsBundle\\Classes\\Headers\\' . $name . 'Header';
+        $className = 'Eidsonator\\SemanticReportsBundle\\Classes\\Headers\\' . $name . 'Header';
         if (class_exists($className)) {
             if ($dataSet !== null && isset($className::$validation) && isset($className::$validation['dataset'])) {
                 $value['dataset'] = $dataSet;
@@ -331,7 +331,7 @@ class Report extends ContainerAware
         // First, apply filters for all datasets
         if (isset($this->filters['all']) && isset($this->filters['all'][$column])) {
             foreach ($this->filters['all'][$column] as $type => $options) {
-                $classname = "Eidsonator\\ReportsBundle\\Classes\\Filters\\{$type}Filter";
+                $classname = "Eidsonator\\SemanticReportsBundle\\Classes\\Filters\\{$type}Filter";
                 $value = $classname::filter($value, $options, $this, $row);
 
                 //if the column should not be displayed
@@ -342,7 +342,7 @@ class Report extends ContainerAware
         // Then apply filters for this specific dataset
         if (isset($this->filters[$dataset]) && isset($this->filters[$dataset][$column])) {
             foreach ($this->filters[$dataset][$column] as $type => $options) {
-                $classname = "Eidsonator\\ReportsBundle\\Classes\\Filters\\{$type}Filter";
+                $classname = "Eidsonator\\SemanticReportsBundle\\Classes\\Filters\\{$type}Filter";
                 $value = $classname::filter($value, $options, $this, $row);
 
                 //if the column should not be displayed
@@ -376,7 +376,7 @@ class Report extends ContainerAware
             $this->macros['host'] = $environments[$this->options['Environment']]['host'];
         }
 
-        $className = 'Eidsonator\\ReportsBundle\\Classes\\ReportTypes\\' . $this->options['Type'] . 'ReportType';
+        $className = 'Eidsonator\\SemanticReportsBundle\\Classes\\ReportTypes\\' . $this->options['Type'] . 'ReportType';
 
         if (!class_exists($className)) {
             throw new \Exception("Unknown report type '{$this->options['Type']}'");
@@ -477,13 +477,13 @@ class Report extends ContainerAware
         //so the session isn't locked while the report is running
         session_write_close();
 
-        $className = "Eidsonator\\ReportsBundle\\Classes\\ReportTypes\\{$this->options['Type']}ReportType";
+        $className = "Eidsonator\\SemanticReportsBundle\\Classes\\ReportTypes\\{$this->options['Type']}ReportType";
         if (!class_exists($className)) {
             throw new \Exception("Unknown report type '" . $this->options['Type'] . "'");
         }
 
         foreach ($this->headers as $header) {
-            $headerClass = "Eidsonator\\ReportsBundle\\Classes\\Headers\\{$header}Header";
+            $headerClass = "Eidsonator\\SemanticReportsBundle\\Classes\\Headers\\{$header}Header";
             $headerClass::beforeRun($this);
         }
 
@@ -636,7 +636,7 @@ class Report extends ContainerAware
 
         //at this point, all the headers are parsed and we haven't run the report yet
         foreach ($this->headers as $header) {
-            $classname = "Eidsonator\\ReportsBundle\\Classes\\Headers\\{$header}Header";
+            $classname = "Eidsonator\\SemanticReportsBundle\\Classes\\Headers\\{$header}Header";
             $classname::afterParse($this);
         }
 
@@ -667,7 +667,7 @@ class Report extends ContainerAware
 
         //call the beforeRender callback for each header
         foreach ($this->headers as $header) {
-            $classname = "Eidsonator\\ReportsBundle\\Classes\\Headers\\{$header}Header";
+            $classname = "Eidsonator\\SemanticReportsBundle\\Classes\\Headers\\{$header}Header";
             $classname::beforeRender($this);
         }
 

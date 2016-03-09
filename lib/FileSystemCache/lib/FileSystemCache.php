@@ -10,7 +10,7 @@
  * @version    1.0.0
  */
 
-namespace Eidsonator\ReportsBundle\lib\FileSystemCache\lib;
+namespace Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib;
 
 class FileSystemCache {
 	/**

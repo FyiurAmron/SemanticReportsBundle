@@ -12,7 +12,7 @@
  * @version    1.2.18
  */
 
-namespace Eidsonator\ReportsBundle\lib\SqlFormatter\lib;
+namespace Eidsonator\SemanticReportsBundle\lib\SqlFormatter\lib;
 
 class SqlFormatter
 {

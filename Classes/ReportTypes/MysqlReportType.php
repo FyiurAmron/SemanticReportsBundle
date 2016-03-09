@@ -1,10 +1,10 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Classes\ReportTypes;
+namespace Eidsonator\SemanticReportsBundle\Classes\ReportTypes;
 
-use Eidsonator\ReportsBundle\lib\PhpReports\ReportTypeBase;
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
-use Eidsonator\ReportsBundle\lib\SqlFormatter\lib\SqlFormatter;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\ReportTypeBase;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\lib\SqlFormatter\lib\SqlFormatter;
 
 class MysqlReportType extends ReportTypeBase
 {

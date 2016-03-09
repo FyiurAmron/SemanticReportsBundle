@@ -1,9 +1,9 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Classes\Filters;
+namespace Eidsonator\SemanticReportsBundle\Classes\Filters;
 
-use Eidsonator\ReportsBundle\Classes\Filters\linkFilter;
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\Classes\Filters\linkFilter;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 class drilldownFilter extends linkFilter
 {

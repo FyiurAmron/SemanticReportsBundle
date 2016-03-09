@@ -1,6 +1,6 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\DependencyInjection;
+namespace Eidsonator\SemanticReportsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

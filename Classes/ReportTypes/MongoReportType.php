@@ -1,9 +1,9 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Classes\ReportTypes;
+namespace Eidsonator\SemanticReportsBundle\Classes\ReportTypes;
 
-use Eidsonator\ReportsBundle\lib\PhpReports\ReportTypeBase;
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\ReportTypeBase;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 
 class MongoReportType extends ReportTypeBase {

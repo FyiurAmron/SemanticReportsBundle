@@ -1,6 +1,6 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\lib\PhpReports;
+namespace Eidsonator\SemanticReportsBundle\lib\PhpReports;
 
 class ReportValue
 {

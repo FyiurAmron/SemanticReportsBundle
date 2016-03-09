@@ -1,8 +1,8 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\lib\PhpReports;
+namespace Eidsonator\SemanticReportsBundle\lib\PhpReports;
 
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class ReportFormatBase

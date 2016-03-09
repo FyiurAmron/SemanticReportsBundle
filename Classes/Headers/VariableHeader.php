@@ -1,10 +1,10 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Classes\Headers;
+namespace Eidsonator\SemanticReportsBundle\Classes\Headers;
 
-use Eidsonator\ReportsBundle\Classes\ReportTypes\AdoReportType;
-use Eidsonator\ReportsBundle\lib\PhpReports\HeaderBase;
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\Classes\ReportTypes\AdoReportType;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\HeaderBase;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 class VariableHeader extends HeaderBase
 {
@@ -186,7 +186,7 @@ class VariableHeader extends HeaderBase
 	}
 	
 	public static function afterParse(&$report) {
-		$classname = "Eidsonator\\ReportsBundle\\Classes\\ReportTypes\\{$report->options['Type']}ReportType";
+		$classname = "Eidsonator\\SemanticReportsBundle\\Classes\\ReportTypes\\{$report->options['Type']}ReportType";
 		
 		foreach($report->options['Variables'] as $var=>$params) {
 

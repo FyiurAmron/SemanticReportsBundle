@@ -1,15 +1,15 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Controller;
+namespace Eidsonator\SemanticReportsBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Eidsonator\ReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Eidsonator\ReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
-use Eidsonator\ReportsBundle\lib\simplediff\SimpleDiff;
+use Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
+use Eidsonator\SemanticReportsBundle\lib\simplediff\SimpleDiff;
 
 
 
@@ -243,7 +243,7 @@ class DefaultController extends Controller
     private function display(Request $request, $type)
     {
         $this->setUp();
-        $className = "Eidsonator\\ReportsBundle\\Classes\\ReportFormats\\{$type}ReportFormat";
+        $className = "Eidsonator\\SemanticReportsBundle\\Classes\\ReportFormats\\{$type}ReportFormat";
         $error_header = 'An error occurred while running your report';
         $content = '';
 

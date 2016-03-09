@@ -1,10 +1,10 @@
 <?php
 
-namespace Eidsonator\ReportsBundle\Classes\ReportFormats;
+namespace Eidsonator\SemanticReportsBundle\Classes\ReportFormats;
 
-use Eidsonator\ReportsBundle\lib\PhpReports\ReportFormatBase;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\ReportFormatBase;
 
-require_once '..\src\Eidsonator\ReportsBundle\vendor\phpoffice\phpexcel\Classes\PHPExcel.php';
+require_once '..\src\Eidsonator\SemanticReportsBundle\vendor\phpoffice\phpexcel\Classes\PHPExcel.php';
 
 abstract class XlsReportBase extends ReportFormatBase
 {
