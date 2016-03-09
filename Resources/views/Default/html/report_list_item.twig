@@ -17,7 +17,7 @@
 				{% for item in item.children %}
 					<li>		
 						{% set h = h + 1 %}
-						{% include "@EidsonatorReports/Default/html/report_list_item.twig" %}
+						{% include "@SemanticReports/Default/html/report_list_item.twig" %}
 						{% set h = h - 1 %}
 					</li>
 				{% endfor %}
@@ -25,9 +25,9 @@
 		</div>
 	{% endif %}
 {% elseif not item.ignore is defined or not item.ignore %}
-	<a class='pull-right' href='{{ url('bapm_reports_display', {report : item.get}) }}' style='margin-left: 5px; opacity:.6;'>
+	<a class='pull-right' href='{{ url('eidsonator_reports_display', {report : item.get}) }}' style='margin-left: 5px; opacity:.6;'>
 		<img alt='Export CSV File' title='Export CSV File' src="{{ asset('bundles/bapmreports/images/images/document-excel-csv.png') }}"/></a>
-	<a href='{{ url('bapm_reports_display', {report : item.get}) }}' id='report_{{item.Id}}'>
+	<a href='{{ url('eidsonator_reports_display', {report : item.get}) }}' id='report_{{item.Id}}'>
 		{{item.Name}}
 		{% if item.stop is defined and item.stop %}
 			<img alt='Stop!' title='Stop!' src="{{ asset('bundles/bapmreports/images/images/traffic-light-red.png') }}"/>

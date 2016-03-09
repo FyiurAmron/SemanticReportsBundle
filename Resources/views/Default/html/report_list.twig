@@ -1,4 +1,4 @@
-{% extends "@EidsonatorReports/Default/html/page.twig" %}
+{% extends "@SemanticReports/Default/html/page.twig" %}
 
 {% block title %}Report List{% endblock %}
 
@@ -18,7 +18,7 @@
 	{% block table_of_contents %}
 		<ul class="nav bs-sidenav">
 			{% for item in reports %}
-				{% include "@EidsonatorReports/Default/html/report_list_table_of_contents_item.twig" %}
+				{% include "@SemanticReports/Default/html/report_list_table_of_contents_item.twig" %}
 			{% endfor %}
 		</ul>
 	{% endblock %}
@@ -58,7 +58,7 @@
 				{% if not loop.first %}
 					<a href="#" class="pull-right" style="font-size: 12px; font-weight:normal;">top</a>
 				{% endif %}
-				{% include "@EidsonatorReports/Default/html/report_list_item.twig" %}
+				{% include "@SemanticReports/Default/html/report_list_item.twig" %}
 			</div>
 			{% endfor %}
 		{% endblock %}

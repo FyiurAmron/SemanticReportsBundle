@@ -6,7 +6,7 @@
 (function() {
     var data = new Dataset({
         prefetch: {
-            url: Routing.generate('bapm_reports_list_json'),
+            url: Routing.generate('eidsonator_reports_list_json'),
             ttl: 0
         },
         valueKey: 'name',

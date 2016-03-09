@@ -39,7 +39,7 @@ class DefaultController extends Controller
         $template_vars['report_errors'] = $errors;
         $template_vars['recent_reports'] = $this->getRecentReports();
         $start = microtime(true);
-        return $this->render('@EidsonatorReports/Default/html/report_list.twig',$template_vars);
+        return $this->render('@SemanticReports/Default/html/report_list.twig',$template_vars);
     }
 
     public function listReportsJsonAction(Request $request)
@@ -263,7 +263,7 @@ class DefaultController extends Controller
 
             $twigArray =  $className::display($report, $request);
             if (is_array($twigArray)) {
-                $reportURL =  $this->generateUrl('bapm_generate_report');
+                $reportURL =  $this->generateUrl('eidsonator_generate_report');
                 $report->setBaseURL($reportURL);
                 $twigArray['vars'] = $report->getReportVariables($twigArray['vars']);
                 $content = $report->options['Query_Formatted'];
@@ -277,7 +277,7 @@ class DefaultController extends Controller
             } else {
                 $title = 'broken';
             }
-            return  $this->render('@EidsonatorReports/Default/html/page.twig',array(
+            return  $this->render('@SemanticReports/Default/html/page.twig',array(
                 'title'=> $title,
                 'header'=>'<h2>'.$error_header.'</h2>',
                 'error'=>$e->getMessage(),
@@ -339,7 +339,7 @@ class DefaultController extends Controller
             return new Response($html);
         }
         else {
-            return $this->render('@EidsonatorReports/Default/html/report_editor.twig', $templateVars);
+            return $this->render('@SemanticReports/Default/html/report_editor.twig', $templateVars);
         }
 
     }
@@ -441,7 +441,7 @@ class DefaultController extends Controller
             $data = $temp->options;
 
             $data['report'] = $report;
-            $data['url'] = $this->generateUrl('bapm_generate_report', ["report" => $report]); //'report='.$report;
+            $data['url'] = $this->generateUrl('eidsonator_generate_report', ["report" => $report]); //'report='.$report;
             $data['get'] = $report; //todo generate url
             $data['is_dir'] = false;
             $data['Id'] = str_replace(array('_', '-', '/', ' ', '.'), array('', '', '_', '-', '_'), trim($report, '/'));

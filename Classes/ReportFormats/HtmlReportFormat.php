@@ -19,9 +19,9 @@ class HtmlReportFormat extends ReportFormatBase
 		//if we're only getting the report content
 		if($request->query->has('content_only')) {
 
-			$template = '@EidsonatorReports/Default/html/content_only.twig';
+			$template = '@SemanticReports/Default/html/content_only.twig';
 		} else {
-			$template = '@EidsonatorReports/Default/html/report.twig';
+			$template = '@SemanticReports/Default/html/report.twig';
 		}
 		try {
 			$additional_vars = array();
@@ -35,7 +35,7 @@ class HtmlReportFormat extends ReportFormatBase
 		}
 		catch(\Exception $e) {
 			if($request->query->has('content_only')) {
-				$template = '@EidsonatorReports/Default/html/blank_page.twig';
+				$template = '@SemanticReports/Default/html/blank_page.twig';
 			}
 			
 			$vars = array(

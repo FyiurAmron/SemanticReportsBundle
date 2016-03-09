@@ -54,7 +54,7 @@ class drilldownFilter extends linkFilter
             return $value;
         }
 
-        $url = $report->getController()->generateUrl('bapm_generate_report', ['report' => $path]);
+        $url = $report->getController()->generateUrl('eidsonator_generate_report', ['report' => $path]);
             //PhpReports::$request->base.'/report/html/?report='.$path;
 
         $macros = array();

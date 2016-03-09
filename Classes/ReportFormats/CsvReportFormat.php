@@ -29,7 +29,7 @@ class CsvReportFormat extends ReportFormatBase
         $i = intval($i);
 
         $vars = ['dataset' => $i];
-        $template = '@EidsonatorReports/Default/csv/report.twig';
+        $template = '@SemanticReports/Default/csv/report.twig';
 
         $report->renderReportPage($template, $vars);
         return ["template" => $template, "vars" => $vars];

@@ -1,61 +1,61 @@
-bapm_reports_homepage:
+eidsonator_reports_homepage:
     path:     /reports
-    defaults: { _controller: EidsonatorSemanticReportsBundle:Default:listReports }
+    defaults: { _controller: SemanticReportsBundle:Default:listReports }
 
-bapm_reports_list_json:
+eidsonator_reports_list_json:
     path:       /reportListJson
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:listReportsJson }
+    defaults:   { _controller: SemanticReportsBundle:Default:listReportsJson }
     options:
         expose: true
 
-bapm_reports_display:
+eidsonator_reports_display:
     path:       /report/html
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayHtml }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayHtml }
 
-bapm_generate_report:
+eidsonator_generate_report:
     path:       /report/generate
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayHtml }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayHtml }
 
-bapm_generate_xml:
+eidsonator_generate_xml:
     path:       /report/xml
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayXml }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayXml }
 
-bapm_generate_debug:
+eidsonator_generate_debug:
     path:       /report/debug
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayDebug }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayDebug }
 
-bapm_generate_chart:
+eidsonator_generate_chart:
     path:       /report/chart
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayChart }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayChart }
 
-bapm_generate_xlsx:
+eidsonator_generate_xlsx:
     path:       /report/xlsx
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayXlsx }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayXlsx }
 
-bapm_generate_xls:
+eidsonator_generate_xls:
     path:       /report/xls
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayXls }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayXls }
 
-bapm_generate_csv:
+eidsonator_generate_csv:
     path:       /report/csv
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayCsv }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayCsv }
 
-bapm_generate_table:
+eidsonator_generate_table:
     path:       /report/table
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayTable }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayTable }
 
-bapm_generate_text:
+eidsonator_generate_text:
     path:       /report/text
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayText }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayText }
 
-bapm_report_path:
+eidsonator_report_path:
     path:       /report
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:displayHtml }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayHtml }
 
-bapm_report_edit:
+eidsonator_report_edit:
     path:       /report/edit
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:edit }
+    defaults:   { _controller: SemanticReportsBundle:Default:edit }
 
-bapm_report_email:
+eidsonator_report_email:
     path:       /report/email
-    defaults:   { _controller: EidsonatorSemanticReportsBundle:Default:email }
+    defaults:   { _controller: SemanticReportsBundle:Default:email }

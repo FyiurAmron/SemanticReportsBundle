@@ -1,4 +1,4 @@
-{% extends "@EidsonatorReports/Default/html/page.twig" %}
+{% extends "@SemanticReports/Default/html/page.twig" %}
 
 {% if options.Name %}
 	{% set Name = options.Name %}
@@ -68,7 +68,7 @@
     $("#preview_button").click(function() {
 		//open a modal with diff output
 		$.post(
-			"{{ url('bapm_report_edit') }}?{{ report_querystring }}",
+			"{{ url('eidsonator_report_edit') }}?{{ report_querystring }}",
 			{
 				contents: editor.getSession().getDocument().getAllLines().join("\n"),
 				preview: true
@@ -87,7 +87,7 @@
     $("#save_button").click(function() {
 		//save report
 		$.post(
-			"{{ url('bapm_report_edit') }}?{{ report_querystring }}",
+			"{{ url('eidsonator_report_edit') }}?{{ report_querystring }}",
 			{
 				contents: editor.getSession().getDocument().getAllLines().join("\n"),
 				save: true
@@ -111,7 +111,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-	{% set report_url = url('bapm_reports_display') + "?" ~ report_querystring %}
+	{% set report_url = url('eidsonator_reports_display') + "?" ~ report_querystring %}
 	{% set breadcrumb = {"Report List": "", (Name): report_url, "Edit": true} %}
 	{{ parent() }}
 {% endblock %}

@@ -1,6 +1,6 @@
 {% block chart_area %}
     {% if has_charts is defined and no_charts is not defined %}
-				<iframe src="{{ url('bapm_generate_chart') }}?{{report_querystring}}" id='chart_container' class="auto-height" scrolling="no" style='width:100%;' frameborder="0"></iframe>
+				<iframe src="{{ url('eidsonator_generate_chart') }}?{{report_querystring}}" id='chart_container' class="auto-height" scrolling="no" style='width:100%;' frameborder="0"></iframe>
         <script>
             $(function() {
                 $('iframe#chart_container').iframeAutoHeight();
@@ -9,7 +9,7 @@
     {% endif %}
 {% endblock %}
 
-{% include "@EidsonatorReports/Default/html/table.twig" %}
+{% include "@SemanticReports/Default/html/table.twig" %}
 
 {% if nodata is defined and not nodata %}
 <script type='text/javascript'>
