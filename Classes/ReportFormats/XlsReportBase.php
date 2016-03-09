@@ -4,8 +4,6 @@ namespace Eidsonator\SemanticReportsBundle\Classes\ReportFormats;
 
 use Eidsonator\SemanticReportsBundle\lib\PhpReports\ReportFormatBase;
 
-require_once '..\src\Eidsonator\SemanticReportsBundle\vendor\phpoffice\phpexcel\Classes\PHPExcel.php';
-
 abstract class XlsReportBase extends ReportFormatBase
 {
     private static function columnLetter($c){
