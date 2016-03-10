@@ -1,6 +1,11 @@
 <?php
+namespace Eidsonator\SemanticReportsBundle\Classes\ReportFormats;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\ReportFormatBase;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
+use Symfony\Component\HttpFoundation\Request;
+
 class JsonReportFormat extends ReportFormatBase {
-	public static function display(&$report, &$request) {		
+	public static function display(Report &$report, Request &$request) {
 		header("Content-type: application/json");
 		header("Pragma: no-cache");
 		header("Expires: 0");
