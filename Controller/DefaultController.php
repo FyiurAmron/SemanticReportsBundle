@@ -19,8 +19,9 @@ class DefaultController extends Controller
     private $reportDirectory;
     private $defaultFileExtensionMapping;
 
-    public function setUp()
+    public function setContainer(ContainerInterface $container = null)
     {
+        parent::setContainer($container);
         $this->reportDirectory = $this->container->getParameter('reportDirectory');
         $this->defaultFileExtensionMapping = $this->container->getParameter('default_file_extension_mapping');
         if (!defined('REPORT_DIRECTORY')) {
@@ -45,7 +46,6 @@ class DefaultController extends Controller
     public function listReportsJsonAction(Request $request)
     {
 
-        $this->setUp();
         $response = new JsonResponse();
         $parts = [];
         $this->generateReportListRecursive(null, $parts);
@@ -250,7 +250,6 @@ class DefaultController extends Controller
 
     private function display(Request $request, $type)
     {
-        $this->setUp();
         $className = "Eidsonator\\SemanticReportsBundle\\Classes\\ReportFormats\\{$type}ReportFormat";
         $error_header = 'An error occurred while running your report';
         $content = '';
