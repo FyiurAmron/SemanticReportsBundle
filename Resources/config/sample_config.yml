@@ -1,7 +1,7 @@
 bootstrap_reports:
     # report_directory and dashboard_directory root is the 'web' directory
     report_directory    : "sample_reports/"
-    dashboard_directory : "sample_dashboards"
+    dashboard_directory : "sample_dashboards/"
     default_file_extension_mapping:
         sql :   'Mysql'
         php :   'Php'
@@ -10,7 +10,7 @@ bootstrap_reports:
     environments:
         main:
             mysql:
-                host:   %database_joser%
+                host:   %database_host%
                 user:   %database_user%
                 pass:   %database_password%
                 database: %database_name%
