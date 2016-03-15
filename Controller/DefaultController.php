@@ -273,7 +273,7 @@ class DefaultController extends Controller
                 $reportURL =  $this->generateUrl('eidsonator_generate_report');
                 $report->setBaseURL($reportURL);
                 $twigArray['vars'] = $report->getReportVariables($twigArray['vars']);
-                $content = $report->options['Query_Formatted'];
+                $content = isset($report->options['Query_Formatted']) ? $report->options['Query_Formatted'] : null;
             }
 
 

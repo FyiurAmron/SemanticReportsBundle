@@ -165,7 +165,7 @@ class PhpReports {
 			}
 			
 			$classname::display($report,self::$request);
-			$content = $report->options['Query_Formatted'];
+			$content = isset($report->options['Query_Formatted']) ? $report->options['Query_Formatted'] : null;
 		}
 		catch(\Exception $e) {
 			echo self::render('html/page',array(
@@ -192,7 +192,7 @@ class PhpReports {
 			);
 		}
 		//if there is an error parsing the report
-		catch(Exception $e) {
+		catch(\Exception $e) {
 			$template_vars = array(
 				'report'=>$report,
 				'contents'=>Report::getReportFileContents($report),

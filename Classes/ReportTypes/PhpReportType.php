@@ -44,10 +44,10 @@ class PhpReportType extends ReportTypeBase
 		}
 		$eval .= "\n?><?php /*END REPORT MACROS*/ ?>".$report->raw_query;
 		
-		$config = PhpReports::$config;
+		$environments = $report->getEnvironments();
 		
 		//store in both $database and $environment for backwards compatibility
-		$database = PhpReports::$config['environments'][$report->options['Environment']];
+		$database = $environments[$report->options['Environment']];
 		$environment = $database;
 		
 		$report->options['Query'] = $report->raw_query;
@@ -85,7 +85,7 @@ class PhpReportType extends ReportTypeBase
 		$result = trim($result);
 		
 		$json = json_decode($result, true);
-		if($json === NULL) throw new Exception($result);
+		if($json === NULL) throw new \Exception($result);
 		
 		return $json;
 	}
