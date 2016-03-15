@@ -15,15 +15,15 @@
                 <p>{{ item.Description|raw }}</p>
             {% endif %}
             
-			<ul class='nav nav-list well'>
+			<div class='ui list'>
 				{% for item in item.children %}
-					<li>		
+					<div class="item">
 						{% set h = h + 1 %}
 						{% include "@SemanticReports/Default/html/report_list_item.twig" %}
 						{% set h = h - 1 %}
-					</li>
+					</div>
 				{% endfor %}
-			</ul>
+			</div>
 		</div>
 	{% endif %}
 {% elseif not item.ignore is defined or not item.ignore %}
