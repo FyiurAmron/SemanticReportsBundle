@@ -95,7 +95,7 @@ class HeaderBase
 		}
 		
 		if($errors) {
-			throw new Exception(implode(". ",$errors));
+			throw new \Exception(implode(". ",$errors));
 		}
 		else return $params;
 	}
