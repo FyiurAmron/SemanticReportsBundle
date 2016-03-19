@@ -10,17 +10,15 @@
         }
     ],
     "require": {
-        "jdorn/sql-formatter": "dev-master",
-        "jdorn/file-system-cache": "dev-master",
-        "phpoffice/phpexcel": "dev-develop",
-        "adodb/adodb-php": "dev-master",
-        "lespoilus/spyc": "dev-master",
-        "google/apiclient": "1.0.*@beta"
+        "kriswallsmith/assetic": "v1.3.2",
+        "phpoffice/phpexcel": "1.8.1",
+        "adodb/adodb-php": "v5.20.3",
+        "rmoiseev/spyc": "0.5.1",
+        "google/apiclient": "1.1.7"
     },
     "autoload": {
         "psr-0" : { "Eidsonator\\SemanticReportsBundle": ""}
         
     },
-    "target-dir": "Eidsonator/SemanticReportsBundle",
-    "minimum-stability": "dev"
+    "target-dir": "Eidsonator/SemanticReportsBundle"
 }
