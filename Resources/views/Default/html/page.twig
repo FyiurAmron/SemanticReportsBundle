@@ -7,7 +7,7 @@
 
     <!-- Le styles -->
     {% block stylesheets %}
-    <link id="bootstrap" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link id="bootstrap" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet">
     <link href="/public/css/typeahead.js-bootstrap.css" rel="stylesheet">
     <style>
       body {
@@ -62,7 +62,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="">{% block brand %}PHP Reports{% endblock %}</a>
+                <a class="navbar-brand" href="{{ url('eidsonator_reports_homepage') }}">{% block brand %}Semantic-ui Symfony Reports Bundle{% endblock %}</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -137,16 +137,16 @@
     <!--[if (gte IE 9) | (!IE)]><!-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <!--<![endif]-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.jquery.min.js"></script>
-	<script src="{{ asset('bundles/bootstrapreports/js/scripts.js') }}"></script>
+    <script src="{{ asset('bundles/semanticreports/js/typeahead.min.js') }}"></script>
+	<script src="{{ asset('bundles/semanticreports/js/scripts.js') }}"></script>
     <script>
 		//typeahead report search
 		(function() {
             var data = new Dataset({
                 prefetch: {
-                    url: '{{ url('eidsonator_reports_list_json') }}/report-list-json',
+                    url: '{{ url('eidsonator_reports_list_json') }}',
                     ttl: 0
                 },
                 valueKey: 'name',
