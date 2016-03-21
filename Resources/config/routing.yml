@@ -65,3 +65,10 @@ eidsonator_report_edit:
 eidsonator_report_email:
     path:       /report/email
     defaults:   { _controller: SemanticReportsBundle:Default:email }
+eidsonator_dashboard_list:
+    path:     /dashboards
+    defaults:   { _controller: SemanticReportsBundle:Dashboard:listDashboards }
+
+eidsonator_show_dashboard:
+    path:     /dasboard/{dashboard}
+    defaults: { _controller: SemanticReportsBundle:Dashboard:showDashboard }
