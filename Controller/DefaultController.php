@@ -2,7 +2,6 @@
 
 namespace Eidsonator\SemanticReportsBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,9 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
 use Eidsonator\SemanticReportsBundle\lib\simplediff\SimpleDiff;
-
-
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DefaultController extends Controller
 {
