@@ -42,10 +42,12 @@ eidsonator_generate_csv:
 
 eidsonator_generate_json:
     path:       /report/json
-    defaults:   { _controller: SemanticReportsBundle:Default:displayJson }
+    defaults:   { _controller: SemanticReportsBundle:Default:displayJson }\
+
 eidsonator_generate_sql:
     path:       /report/sql
     defaults:   { _controller: SemanticReportsBundle:Default:displaySql }
+
 eidsonator_generate_table:
     path:       /report/table
     defaults:   { _controller: SemanticReportsBundle:Default:displayTable }
@@ -65,6 +67,7 @@ eidsonator_report_edit:
 eidsonator_report_email:
     path:       /report/email
     defaults:   { _controller: SemanticReportsBundle:Default:email }
+
 eidsonator_dashboard_list:
     path:     /dashboards
     defaults:   { _controller: SemanticReportsBundle:Dashboard:listDashboards }
