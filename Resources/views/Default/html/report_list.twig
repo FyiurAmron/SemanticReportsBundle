@@ -39,8 +39,8 @@
                                 <div>
                                     <strong>{{ error.report }}</strong> - {{ error.exception.message }}
                                     <span style="padding-left: 20px;">
-                                        {#<a href="{{base}}/report/raw/?report={{error.report}}" style="margin-right: 10px;" target="_blank">view source</a>#}
-                                        {#<a href="{{base}}/edit/?report={{error.report}}" target="_blank">edit</a>#}
+                                        <a href="{{ url('eidsonator_report_raw') }}?report={{error.report}}" style="margin-right: 10px;" target="_blank">view source</a>
+                                        <a href="{{ url('eidsonator_report_edit') }}?report={{error.report}}" target="_blank">edit</a>
                                     </span>
                                 </div>
                             {% endfor %}
@@ -66,4 +66,5 @@
 		{% endblock %}
 	</div>
 </div>
+
 {% endblock %}
