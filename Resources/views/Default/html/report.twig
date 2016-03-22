@@ -108,7 +108,7 @@
                                     <h4 class="modal-title">Email Report</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="alert alert-danger" id="email-report-modal-alert" style="display: none;"></div>
+                                    <div class="ui warning message" id="email-report-modal-alert" style="display: none;"></div>
                                     <p>A CSV file will be attached and a link will be sent</p>
 
                                     <form class="ui form">
@@ -193,7 +193,7 @@
         </div>
     
         {% if config.mail_settings is defined and config.mail_settings.enabled %}
-            <div class='alert alert-success' style='display: none;' id='email-report-success-message'>
+            <div class='ui positive message' style='display: none;' id='email-report-success-message'>
                 {% block email_report_success_message %}
                     Email Sent Successfully
                 {% endblock %}
@@ -203,7 +203,7 @@
 
     <div id='report_content'>
         {% if not is_ready %}
-            <div class='alert alert-info'>
+            <div class='ui info message'>
             This report needs more information before running.
             </div>
         {% elseif async %}

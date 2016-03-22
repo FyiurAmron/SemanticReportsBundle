@@ -20,7 +20,7 @@
 
 		{% block notice_area %}
 			{% if error is defined %}
-				<div class='alert alert-danger'>
+				<div class='ui warning message'>
 					{% if error.message is defined %}
 						{{error.message}}
 					{% else %}
@@ -30,7 +30,7 @@
 			{% endif %}
 
 			{% if notice is defined %}
-				<div class='alert alert-info'>
+				<div class='ui info message'>
 					{{notice}}
 				</div>
 			{% endif %}
