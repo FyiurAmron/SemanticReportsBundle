@@ -13,7 +13,7 @@ abstract class ReportFormatBase
 	
 	public static function prepareReport(Report $report) {
 
-		$environment =  'main';//$_SESSION['environment'];
+		$environment =  'prod';
 		//todo make this stateful?
 
 		$macros = array();
