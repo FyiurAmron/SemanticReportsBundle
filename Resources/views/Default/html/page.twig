@@ -187,6 +187,7 @@
     </script>
 	{% endblock %}
 	<script>
+                $(".ui.accordion").accordion();
 		//run any queued on-ready scripts
 		for(var i in queued_jquery_calls) {
 			$(queued_jquery_calls[i]);
