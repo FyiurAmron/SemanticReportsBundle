@@ -28,7 +28,6 @@ class DefaultController extends Controller
 
     public function listReportsAction()
     {
-        $this->setUp();
         $errors = array();
 
         $reports = $this->getReports($this->reportDirectory, $errors);
