@@ -40,8 +40,8 @@
     {% if nodata is defined and not nodata  %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/dataTables.bootstrap.min.js"></script>
     {% endif %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.19/daterangepicker.min.js"></script>
+    <script src="{{ asset('bundles/semanticreports/js/moment-with-langs-2.5.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/semanticreports/js/daterangepicker-1.3.2.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.stickytableheaders.js') }}"></script>
