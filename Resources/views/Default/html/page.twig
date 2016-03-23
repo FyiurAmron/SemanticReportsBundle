@@ -8,7 +8,7 @@
     <!-- Le styles -->
     {% block stylesheets %}
     <link id="bootstrap" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet">
-    <link href="/public/css/typeahead.js-bootstrap.css" rel="stylesheet">
+    <link href="{{ asset('bundles/semanticreports/css/typeahead.js-bootstrap.css') }}" rel="stylesheet">
 	{% endblock %}
 
 	<script>
@@ -128,7 +128,7 @@
                 },
                 valueKey: 'name',
                 sorter: function(a,b) {
-                    var val = $('form[role="search"] input.search-query').typeahead('val')[0];
+                    var val = $('input.search-query').typeahead('val')[0];
 
                     //beginning of title match
                     var beg = new RegExp('^'+val,'i');
@@ -160,7 +160,7 @@
                 }
             });
 
-            $('form[role="search"] input.search-query').typeahead({
+            $('input.search-query').typeahead({
                 sections: [{
                     source: data,
                     highlight: true
