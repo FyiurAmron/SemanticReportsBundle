@@ -55,17 +55,20 @@
 {% endblock %}
 
 {% block header %}
-    <h1>{{Name}}</h1>
-    {% if Description is defined and Description %}
-        <p id='report_description'>{{Description|raw}}</p>
-    {% endif %}
-    
-    {% if Variables is not empty %}
-        {% include "@SemanticReports/Default/html/variable_form.twig" %}
-    {% endif %}
+    <div class="ui container">
+        <h1 class="ui header">{{Name}}</h1>
+        {% if Description is defined and Description %}
+            <p id='report_description'>{{Description|raw}}</p>
+        {% endif %}
+        
+        {% if Variables is not empty %}
+            {% include "@SemanticReports/Default/html/variable_form.twig" %}
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block content %}
+    <div class="ui container">
     {% if is_ready %}
         <div class='row export_links' style='margin: 10px 0;'>
         {% block export_links %}
@@ -190,7 +193,7 @@
                 {% endblock %}
             {% endif %}
         {% endblock %}
-        </div>
+        
     
         {% if config.mail_settings is defined and config.mail_settings.enabled %}
             <div class='ui positive message' style='display: none;' id='email-report-success-message'>
@@ -214,7 +217,7 @@
     </div>
 
     {% block time_estimate %}
-        {% if time_estimate is defined %}
+        {% if time_estimate is defined %}        
             <div class="ui accordion" style='margin-top: 20px;'>
 
                 {#<a data-role="button" data-toggle="collapse" data-target="#time_estimate_holder" href="#time_estimate_holder">show time estimate data</a>#}
@@ -230,7 +233,8 @@
                     <div><strong>Average: </strong> {{time_estimate.average}}</div>
                     <div><strong>Standard Deviation: </strong> {{time_estimate.stdev}}</div>    
                 </div>
-            </div>
+            </div>        
         {% endif %}
     {% endblock %}
+    </div>
 {% endblock %}
