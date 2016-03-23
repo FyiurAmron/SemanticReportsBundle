@@ -84,7 +84,7 @@
                                     {% if config.report_formats[format] == 'divider' %}
                                         <div class="divider"></div>
                                     {% elseif (DataSets is defined and DataSets|length <= 1) or format != 'csv' %}
-                                        <div class="item"><a href='{{ url('eidsonator_report_path') }}/{{format}}?{% if DataSets is defined and DataSets|length > 1 %}datasets=all&{% endif %}{{report_querystring}}' class='report_link'>{{config.report_formats[format]}}</a></div>
+                                        <a class="item" href='{{ url('eidsonator_report_path') }}/{{format}}?{% if DataSets is defined and DataSets|length > 1 %}datasets=all&{% endif %}{{report_querystring}}' class='report_link'>{{config.report_formats[format]}}</a>
                                     {% endif %}
                                 {% endfor %}
                             </div>
