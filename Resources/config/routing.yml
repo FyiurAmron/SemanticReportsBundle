@@ -8,6 +8,10 @@ eidsonator_reports_list_json:
     options:
         expose: true
 
+eidsonator_report:
+    path:       /report
+    defaults:   { _controller: SemanticReportsBundle:Default:displayHtml }
+    
 eidsonator_reports_display:
     path:       /report/html
     defaults:   { _controller: SemanticReportsBundle:Default:displayHtml }

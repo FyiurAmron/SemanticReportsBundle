@@ -31,11 +31,11 @@
     padding: 0;
   }
   </style>
-  {% if dashboard.style %}
-  <style type="text/css">
-    {{ dashboard.style|raw }}
-  </style>
-  {% endif %}
+  {#{% if dashboard.style %}#}
+  {#<style type="text/css">#}
+    {#{{ dashboard.style|raw }}#}
+  {#</style>#}
+  {#{% endif %}#}
 {% endblock %}
 
 {% block javascripts %}
@@ -83,7 +83,7 @@ $.each(dashboard.reports, function(i,report) {
   if(report.title) {
     container.append($("<h2 class='report-title'>").text(report.title));
   }
-  container.append("<div class='info'><a class='full-link' href='{{base}}/report/html/?"+$.param(report_data)+"'>View full report</a><span class='rendered'></span></div>");
+  container.append("<div class='info'><a class='full-link' href='{{ url('eidsonator_reports_display') }}/?"+$.param(report_data)+"'>View full report</a><span class='rendered'></span></div>");
   
   if(report.description) {
     container.append($("<p class='description'>").text(report.description));
@@ -93,7 +93,7 @@ $.each(dashboard.reports, function(i,report) {
 
   var render = function() {
     if(!report.format || report.format === 'html' || report.format === 'table') {
-      var report_url = "{{base}}/report/html";
+      var report_url = "{{ url('eidsonator_reports_display') }}";
       
       // Loading message
       holder.html("<p>Loading...</p>");
@@ -103,7 +103,7 @@ $.each(dashboard.reports, function(i,report) {
       });
     }
     else {
-      holder.attr('src',"{{base}}/report/"+report.format+"?"+$.param(report_data));
+      holder.attr('src',"{{ url('eidsonator_report')}}/"+report.format+"?"+$.param(report_data));
     }
   };
       
