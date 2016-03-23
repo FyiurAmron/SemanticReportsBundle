@@ -138,16 +138,18 @@
                     </div>
 
                     <script>
-                        $('#emailToggle').popup({
-                            popup: $('#emailModal'),
-                            on: 'click',
-                            hoverable: true,
-                            position : 'bottom left',
-                            delay: {
-                                show: 300,
-                                hide: 800
-                            }
-                        });
+                        window.onload = function(){
+                            $('#emailToggle').popup({
+                                popup: $('#emailModal'),
+                                on: 'click',
+                                hoverable: true,
+                                position : 'bottom left',
+                                delay: {
+                                    show: 300,
+                                    hide: 800
+                                }
+                            });
+                        };
                     </script>
 
                     <script type="text/ng-template" id="emailModal">
