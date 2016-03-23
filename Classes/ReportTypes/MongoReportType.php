@@ -45,7 +45,7 @@ class MongoReportType extends ReportTypeBase {
 				$value = json_encode($value);
 			}
 			else {
-				$value = '"'.addslashes($value).'"';
+				$value = "'" . addslashes($value) . "'";
 			}
 			
 			$eval .= 'var '.$key.' = '.$value.';'."\n";
