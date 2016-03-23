@@ -44,11 +44,13 @@
         {% block navdropdown %}
             {% if recent_reports is defined %}
                 <div class="ui simple dropdown item">
-                    Recently Run <i class="dropdown icon"></i>
-                    {% for recent_report in recent_reports %}
-                        <a class="item" href="{{ recent_report.url }}">{{ recent_report.Name }}</a>
-                    {% endfor %}
-                    
+                    Recently Run
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        {% for recent_report in recent_reports %}
+                            <a class="item" href="{{ recent_report.url }}">{{ recent_report.Name }}</a>
+                        {% endfor %}
+                    </div>
                 </div>
             {% endif %}
         {% endblock %}                      
