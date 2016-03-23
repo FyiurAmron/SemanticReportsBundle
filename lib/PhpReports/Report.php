@@ -736,6 +736,10 @@ class Report extends ContainerAware
         $additional_vars = array_merge($additional_vars, $this->options);
 
     }
+    
+    public function expandSql($sql, $macros) {
+        $env = new \Twig_Environment(new \Twig_Loader_Array([]));
+        $template = $env->createTemplate($sql);
+        return $template->render($macros);
+    }
 }
-
-?>
