@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<div id='reports_holder'>
+<div id='reports_holder' class="ui stackable grid" style="margin: 0 15px;">
 
 </div>
 {% endblock %}
@@ -46,9 +46,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
-<script src="{{ asset('bundles/bootstrapreports/js/lang-sql.js') }}"></script>
+<script src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
-<script src="{{ asset('bundles/bootstrapreports/js/jquery.iframe-auto-height.plugin.1.9.3.min.js') }}"></script>
+<script src="{{ asset('bundles/semanticreports/js/jquery.iframe-auto-height.plugin.1.9.3.min.js') }}"></script>
 <script type="text/javascript">
     $("#content").on('click','a[data-role="button"]',function(e) {
         e.preventDefault();
@@ -70,7 +70,7 @@ $.each(dashboard.reports, function(i,report) {
     last_row = $("<div class='row'>").appendTo($("#reports_holder"));
   }
   
-  var container = $("<div class='report-holder'>").appendTo(last_row);
+  var container = $("<div class='eight wide column report-holder'>").appendTo(last_row);
   
   if(report.class) container.addClass(report.class);  
   
