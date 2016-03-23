@@ -70,7 +70,7 @@
 {% block content %}
     <div class="ui container">
     {% if is_ready %}
-        <div class='row export_links' style='margin: 10px 0;'>
+        <div class='row export_links'>
         {% block export_links %}
             {% block download_link %}
                 {% if config.report_formats|length > 1 %}
