@@ -142,7 +142,10 @@ class FileSystemCache {
 	public static function invalidate(FileSystemCacheKey $key) {
 		$filename = $key->getFileName();
 		if(file_exists($filename)) {
-			unlink($filename);
+			try{
+				unlink($filename);
+			} catch (\Exception $ex) {
+			}
 		}
 		return true;
 	}
