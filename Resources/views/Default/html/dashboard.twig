@@ -3,8 +3,10 @@
 {% block title %}{{dashboard.title | default('Dashboard')}}{% endblock %}
 
 {% block header %}
-<h2>{{dashboard.title}}</h2>
-{% if dashboard.description %}<p>{{dashboard.description|raw}}</p>{% endif %}
+<div style="margin: 0 30px;">
+  <h2>{{dashboard.title}}</h2>
+  {% if dashboard.description is defined %}<p>{{dashboard.description|raw}}</p>{% endif %}
+</div>
 {% endblock %}
 
 {% block content %}
