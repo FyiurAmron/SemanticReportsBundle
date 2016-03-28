@@ -31,11 +31,11 @@
     padding: 0;
   }
   </style>
-  {#{% if dashboard.style %}#}
-  {#<style type="text/css">#}
-    {#{{ dashboard.style|raw }}#}
-  {#</style>#}
-  {#{% endif %}#}
+  {% if dashboard.style is defined %}
+  <style type="text/css">
+    {{ dashboard.style|raw }}
+  </style>
+  {% endif %}
 {% endblock %}
 
 {% block javascripts %}
