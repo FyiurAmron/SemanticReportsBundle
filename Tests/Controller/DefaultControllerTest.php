@@ -6,12 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testReportsIndex()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+        $crawler = $client->request('GET', '/reports');
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testDashboardsIndex()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/dashboards');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
