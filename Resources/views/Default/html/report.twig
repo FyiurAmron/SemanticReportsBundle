@@ -89,9 +89,6 @@
                                 {% endfor %}
                             </div>
                         </div>
-
-
-
                     </div>
                 {% else %}
                     <a href='{{ url('eidsonator_report_path') }}/{{config.report_formats|keys[0]}}?{{report_querystring}}' class='report_link btn'>
@@ -104,65 +101,56 @@
                     <div class="ui compact menu">
                         <a class="item" id="emailToggle"><i class='mail outline icon'></i> Email Report</a>
                     </div>
-                    <div id="emailModal" class="ui flowing popup top left transition hidden">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Email Report</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="ui warning message" id="email-report-modal-alert" style="display: none;"></div>
-                                    <p>A CSV file will be attached and a link will be sent</p>
-
-                                    <form class="ui form">
-                                        <div class="field">
-                                            <label for='email-report-modal-email'>Recipient Email Address</label>
-                                            <input type='email' id='email-report-modal-email' value='' />
-                                        </div>
-                                        <div class="field">
-                                            <label for='email-report-modal-subject'>Subject</label>
-                                            <input type='text' id='email-report-modal-subject' value="Database Report - {{Name}}" />
-                                        </div>
-                                        <div class="field">
-                                            <label for='email-report-modal-message'>Message (optional)</label>
-                                            <textarea rows='4' id='email-report-modal-message'></textarea>
-
-                                        </div>
-                                    </form>
-                                </div>
-                                <div >
-                                    <button type="submit" id="sendReport" class="ui button md-raised md-primary" data-loading-text="Sending">Send Email</button>
-                                </div>
+                    <div id="emailModal" class="ui mini modal">
+                            <div class="header">
+                                <h4 class="modal-title">Email Report</h4>
                             </div>
+                            <div class="ui text container" style="margin-bottom: 15px;">
+                                <div class="ui warning message" id="email-report-modal-alert" style="display: none;"></div>
+                                <p>A CSV file will be attached and a link will be sent</p>
+                                <form class="ui form">
+                                    <div class="field">
+                                        <label for='email-report-modal-email'>Recipient Email Address</label>
+                                        <input type='email' id='email-report-modal-email' value='' />
+                                    </div>
+                                    <div class="field">
+                                        <label for='email-report-modal-subject'>Subject</label>
+                                        <input type='text' id='email-report-modal-subject' value="Database Report - {{Name}}" />
+                                    </div>
+                                    <div class="field">
+                                        <label for='email-report-modal-message'>Message (optional)</label>
+                                        <textarea rows='4' id='email-report-modal-message'></textarea>
+                                    </div>
+                                    <div class="field">
+                                        <button type="button" id="sendReport" class="ui blue button" data-loading-text="Sending">Send Email</button>
+                                        <button type="button" id="emailCancel" class="ui red button">Cancel</button>
+                                    </div>
+                                </form>
                         </div>
                     </div>
 
                     <script>
                         window.onload = function(){
-                            $('#emailToggle').popup({
-                                popup: $('#emailModal'),
-                                on: 'click',
-                                hoverable: true,
-                                position : 'bottom left',
-                                delay: {
-                                    show: 300,
-                                    hide: 800
-                                }
+                            $('#emailToggle').click(function(){
+                                $('#emailModal').modal({
+                                    closable  : false
+                                }).modal('show');
+                            });
+
+                            $("#emailCancel").click(function(){
+                                $('#emailModal').modal('hide');
                             });
                         };
-                    </script>
-
-                    <script type="text/ng-template" id="emailModal">
-                        <div class="modal fade" id="email-modal">
-
-                        </div>
                     </script>
 
                     <script>
                         $(function() {
                             $('#sendReport').on('click', function() {
                                 var button = $(this);
-                                button.button('loading');
+                                if (button.text() === "Sending") {
+                                    return;
+                                }
+                                button.text("Sending");
 
                                 var data = {
                                     email: $('#email-report-modal-email').val(),
@@ -172,8 +160,9 @@
                                 };
 
                                 $.getJSON('{{ url('eidsonator_report_email') }}', data, function(response) {
+                                    button.text("Send Email");
                                     if(response && response.success) {
-                                        $('#email-modal').modal('hide');
+                                        $('#emailModal').modal('hide');
 
                                         //show success message
                                         $('#email-report-success-message').show(300).delay(5000).hide(300);
@@ -182,9 +171,7 @@
                                         var error = (response && response.error)? response.error : "There was a problem sending the email";
                                         $('#email-report-modal-alert').text(error).show(300);
                                     }
-                                    button.button('reset');
-                                })
-                                .error(function() {
+                                }).error(function() {
                                     $('#email-report-modal-alert').text("There was an error while sending the email").show(300);
                                 });
 
