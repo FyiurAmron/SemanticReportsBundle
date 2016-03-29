@@ -22,7 +22,10 @@ class DashboardController extends Controller
 
     public function listDashboardsAction()
     {
-        return $this->render('@SemanticReports/Default/html/dashboard_list.twig', ['dashboards' => $this->getDashboards()]);
+        return $this->render(
+            '@SemanticReports/Default/html/dashboard_list.twig',
+            ['dashboards' => $this->getDashboards()]
+        );
     }
 
     protected function getDashboards()
@@ -30,29 +33,33 @@ class DashboardController extends Controller
         $dashboards = glob($this->dashboardDirectory . '/*.json');
 
         $ret = [];
-        foreach($dashboards as $key=>$value) {
-            $name = basename($value,'.json');
+        foreach ($dashboards as $key => $value) {
+            $name = basename($value, '.json');
             $ret[$name] = $this->getDashboard($name);
         }
 
-        uasort($ret, function($a,$b) {
-            return strcmp($a['title'],$b['title']);
+        uasort($ret, function ($a, $b) {
+            return strcmp($a['title'], $b['title']);
         });
 
         return $ret;
     }
 
-    protected function getDashboard($dashboard) {
-        $file = $this->dashboardDirectory . '/'.$dashboard.'.json';
-        if(!file_exists($file)) {
-            throw new \Exception("Unknown dashboard - ".$dashboard);
+    protected function getDashboard($dashboard)
+    {
+        $file = $this->dashboardDirectory . '/' . $dashboard.'.json';
+        if (!file_exists($file)) {
+            throw new \Exception("Unknown dashboard - " . $dashboard);
         }
 
-        return json_decode(file_get_contents($file),true);
+        return json_decode(file_get_contents($file), true);
     }
 
     public function showDashboardAction($dashboard)
     {
-        return $this->render('@SemanticReports/Default/html/dashboard.twig', ['dashboard' => $this->getDashboard($dashboard)]);
+        return $this->render(
+            '@SemanticReports/Default/html/dashboard.twig',
+            ['dashboard' => $this->getDashboard($dashboard)]
+        );
     }
 }
