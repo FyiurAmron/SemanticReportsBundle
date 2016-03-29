@@ -36,7 +36,7 @@ class DefaultController extends Controller
         $template_vars['report_errors'] = $errors;
         $template_vars['recent_reports'] = $this->getRecentReports();
         $start = microtime(true);
-        return $this->render('@SemanticReports/Default/html/report_list.twig',$template_vars);
+        return $this->render('@SemanticReports/Default/html/report_list.twig', $template_vars);
     }
 
     public function listReportsJsonAction(Request $request)
@@ -49,7 +49,8 @@ class DefaultController extends Controller
         return $response;
     }
 
-    protected function urlDownload($url) {
+    protected function urlDownload($url)
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -63,7 +64,7 @@ class DefaultController extends Controller
 
     protected function generateReportListRecursive($reports = null, &$parts)
     {
-        if($reports === null) {
+        if ($reports === null) {
             $errors = array();
             $reports = $this->getReports($this->reportDirectory, $errors);
         }
@@ -71,38 +72,40 @@ class DefaultController extends Controller
         //weight by popular reports
         $recently_run = FileSystemCache::retrieve(FileSystemCache::generateCacheKey('recently_run'));
         $popular = array();
-        if($recently_run !== false) {
-            foreach($recently_run as $report) {
-                if(!isset($popular[$report])) $popular[$report] = 1;
-                else $popular[$report]++;
+        if ($recently_run !== false) {
+            foreach ($recently_run as $report) {
+                if (!isset($popular[$report])) {
+                    $popular[$report] = 1;
+                } else {
+                    $popular[$report]++;
+                }
             }
         }
 
-        foreach($reports as $report) {
-            if($report['is_dir'] && $report['children']) {
+        foreach ($reports as $report) {
+            if ($report['is_dir'] && $report['children']) {
                 //skip if the directory doesn't have a title
-                if(!isset($report['Title']) || !$report['Title']) continue;
-                $part = $this->generateReportListRecursive($report['children'], $parts);
-                //$part = trim(self::getReportListJSON($report['children']),'[],');
-//                if($part) $parts[] = $part;
-            }
-            else {
+                if (!isset($report['Title']) || !$report['Title']) {
+                    continue;
+                }
+                $this->generateReportListRecursive($report['children'], $parts);
+            } else {
                 //skip if report is marked as dangerous
-                if ((isset($report['stop'])&&$report['stop']) || isset($report['Caution']) || isset($report['warning'])) {
+                if ((isset($report['stop']) && $report['stop']) || isset($report['Caution']) || isset($report['warning'])) {
                     continue;
                 }
                 //skip if report is marked as ignore
                 if (isset($report['ignore']) && $report['ignore']) {
                     continue;
                 }
-
                 if (!isset($report['report'])) {
                     continue;
                 }
-                if(isset($popular[$report['report']])) {
+                if (isset($popular[$report['report']])) {
                     $popularity = $popular[$report['report']];
+                } else {
+                    $popularity = 0;
                 }
-                else $popularity = 0;
 
                 $parts[] = [
                     'name'=>$report['Name'],
@@ -111,7 +114,6 @@ class DefaultController extends Controller
                 ];
             }
         }
-        //return '['.trim(implode(',',$parts),',').']';
     }
 
     public function displayHtmlAction(Request $request)
@@ -179,13 +181,12 @@ class DefaultController extends Controller
         $content = '';
 
         try {
-            if(!class_exists($className)) {
+            if (!class_exists($className)) {
                 $error_header = 'Unknown report format';
                 throw new \Exception("Unknown report format '$type'");
             }
-
             try {
-                $report = new Report($request->query->get('report'), [], null, null, $this->container, $this );
+                $report = new Report($request->query->get('report'), [], null, null, $this->container, $this);
                 $report = $className::prepareReport($report);
             } catch (\Exception $e) {
                 $error_header = 'An error occurred while preparing your report';
@@ -201,14 +202,13 @@ class DefaultController extends Controller
             }
 
 
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             if (isset($report)) {
                 $title = $report->report;
             } else {
                 $title = 'broken';
             }
-            return  $this->render('@SemanticReports/Default/html/page.twig',array(
+            return  $this->render('@SemanticReports/Default/html/page.twig', array(
                 'title'=> $title,
                 'header'=>'<h2>'.$error_header.'</h2>',
                 'error'=>$e->getMessage(),
@@ -217,10 +217,8 @@ class DefaultController extends Controller
             ));
         }
         if (isset($twigArray['template'])) {
-            //return $this->render(')
             return $this->render($twigArray['template'], $twigArray['vars']);
         } else {
-
             $twigArray = nl2br($twigArray);
             if ($type === 'Debug') {
                 return new Response("{$twigArray}");
@@ -246,9 +244,7 @@ class DefaultController extends Controller
                 'extension' => $ext
             ];
             $templateVars = $report->getReportVariables($templateVars);
-        }
-            //if there is an error parsing the report
-        catch(\Exception $e) {
+        } catch (\Exception $e) { //if there is an error parsing the report
             $templateVars = [
                 'report' => $report,
                 'contents' => Report::getReportFileContents($report),
@@ -258,42 +254,52 @@ class DefaultController extends Controller
             ];
         }
 
-        if(isset($_POST['preview'])) {
+        if (isset($_POST['preview'])) {
             $diff = new SimpleDiff();
             $html = "<pre>" . $diff->htmlDiffSummary($templateVars['contents'], $_POST['contents']) . "</pre>";
             $twig = clone $this->get('twig');
             $twig->setLoader(new \Twig_Loader_String());
             return new Response($html);
-        }
-        elseif(isset($_POST['save'])) {
+        } elseif (isset($_POST['save'])) {
             $html = $report->setReportFileContents($_POST['contents']);
             return new Response($html);
-        }
-        else {
+        } else {
             return $this->render('@SemanticReports/Default/html/report_editor.twig', $templateVars);
         }
 
     }
 
-    protected function getReports($dir, &$errors = null) {
+    protected function getReports($dir, &$errors = null)
+    {
         $base = $this->reportDirectory;
-        $reports = glob($dir . '*',GLOB_NOSORT);
-        $return = array();
-        foreach($reports as $key=>$report) {
+        $reports = glob($dir . '*', GLOB_NOSORT);
+        $return = [];
+        foreach ($reports as $key => $report) {
             $title = $description = false;
 
-            if(is_dir($report)) {
-                if(file_exists($report.'/TITLE.txt')) $title = file_get_contents($report.'/TITLE.txt');
-                if(file_exists($report.'/README.txt')) $description = file_get_contents($report.'/README.txt');
+            if (is_dir($report)) {
+                if (file_exists($report.'/TITLE.txt')) {
+                    $title = file_get_contents($report.'/TITLE.txt');
+                }
+                if (file_exists($report.'/README.txt')) {
+                    $description = file_get_contents($report.'/README.txt');
+                }
 
-                $id = str_replace(array('_','-','/',' '),array('','','_','-'),trim(substr($report,strlen($base)),'/'));
+                $id = str_replace(
+                    ['_', '-', '/', ' '],
+                    ['', '', '_', '-'],
+                    trim(substr($report, strlen($base)), '/')
+                );
 
                 $children = $this->getReports($report.'/', $errors);
 
                 $count = 0;
-                foreach($children as $child) {
-                    if(isset($child['count'])) $count += $child['count'];
-                    else $count++;
+                foreach ($children as $child) {
+                    if (isset($child['count'])) {
+                        $count += $child['count'];
+                    } else {
+                        $count++;
+                    }
                 }
 
                 $return[] = array(
@@ -305,14 +311,17 @@ class DefaultController extends Controller
                     'children'=>$children,
                     'count'=>$count
                 );
-            }
-            else {
+            } else {
                 //files to skip
-                if(strpos(basename($report), '.') === false) continue;
+                if (strpos(basename($report), '.') === false) {
+                    continue;
+                }
                 $ext = pathinfo($report, PATHINFO_EXTENSION);
-                if(!isset($this->defaultFileExtensionMapping[$ext])) continue;
+                if (!isset($this->defaultFileExtensionMapping[$ext])) {
+                    continue;
+                }
 
-                $name = substr($report,strlen($base));
+                $name = substr($report, strlen($base));
 
                 try {
                     $data = $this->getReportHeaders($name);
@@ -323,9 +332,10 @@ class DefaultController extends Controller
                     if ($grantedAccess) {
                         $return[] = $data;
                     }
-                }
-                catch(\Exception $e) {
-                    if(!$errors) $errors = array();
+                } catch (\Exception $e) {
+                    if (!$errors) {
+                        $errors = [];
+                    }
                     $errors[] = array(
                         'report'=>$name,
                         'exception'=>$e
@@ -334,15 +344,14 @@ class DefaultController extends Controller
             }
         }
 
-        usort($return,function(&$a,&$b) {
+        usort($return, function (&$a, &$b) {
             if ($a['is_dir'] && !$b['is_dir']) {
                 return 1;
             } elseif ($b['is_dir'] && !$a['is_dir']) {
                 return -1;
             }
-
-            if(!isset($a['Title']) && !isset($b['Title'])) {
-                return strcmp($a['Name'],$b['Name']);
+            if (!isset($a['Title']) && !isset($b['Title'])) {
+                return strcmp($a['Name'], $b['Name']);
             } elseif (!isset($a['Title'])) {
                 return 1;
             } elseif (!isset($b['Title'])) {
@@ -355,18 +364,19 @@ class DefaultController extends Controller
         return $return;
     }
 
-    protected function getReportHeaders($report) {
-        $cacheKey = FileSystemCache::generateCacheKey($report,'report_headers');
+    protected function getReportHeaders($report)
+    {
+        $cacheKey = FileSystemCache::generateCacheKey($report, 'report_headers');
 
         //check if report data is cached and newer than when the report file was created
         //the url parameter ?nocache will bypass this and not use cache
         $data =false;
-        if(!isset($_REQUEST['nocache'])) {
+        if (!isset($_REQUEST['nocache'])) {
             $data = FileSystemCache::retrieve($cacheKey, $this->reportDirectory . $report);
         }
 
         //report data not cached, need to parse it
-        if($data === false) {
+        if ($data === false) {
             $temp = new Report($report, array(), null, null, $this->container, $this);
 
             $data = $temp->options;
@@ -376,7 +386,9 @@ class DefaultController extends Controller
             $data['get'] = $report; //todo generate url
             $data['is_dir'] = false;
             $data['Id'] = str_replace(array('_', '-', '/', ' ', '.'), array('', '', '_', '-', '_'), trim($report, '/'));
-            if(!isset($data['Name'])) $data['Name'] = ucwords(str_replace(array('_', '-'), ' ', basename($report)));
+            if (!isset($data['Name'])) {
+                $data['Name'] = ucwords(str_replace(array('_', '-'), ' ', basename($report)));
+            }
 
             //store parsed report in cache
             FileSystemCache::store($cacheKey, $data);
@@ -385,19 +397,22 @@ class DefaultController extends Controller
         return $data;
     }
 
-    public function getRecentReports() {
+    public function getRecentReports()
+    {
         $recently_run = FileSystemCache::retrieve(FileSystemCache::generateCacheKey('recently_run'));
         $recent = array();
-        if($recently_run !== false) {
+        if ($recently_run !== false) {
             $i = 0;
-            foreach($recently_run as $report) {
-                if($i > 10) break;
+            foreach ($recently_run as $report) {
+                if ($i > 10) {
+                    break;
+                }
                 $headers = $this->getReportHeaders($report);
-                if(!$headers) {
+                if (!$headers) {
                     continue;
                 }
-                if(isset($headers['url'])) {
-                    if(isset($recent[$headers['url']])) {
+                if (isset($headers['url'])) {
+                    if (isset($recent[$headers['url']])) {
                         continue;
                     }
                 }
