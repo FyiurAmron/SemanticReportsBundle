@@ -7,92 +7,103 @@ use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 class AdoPivotReportType extends ReportTypeBase
 {
-	public static function init(Report &$report) {
-		$environments = $report->getEnvironments();
-		
-		if(!isset($environments[$report->options['Environment']][$report->options['Database']])) {
-			throw new Exception("No ".$report->options['Database']." database defined for environment '".$report->options['Environment']."'");
-		}
+    public static function init(Report &$report)
+    {
+        $environments = $report->getEnvironments();
 
-		//make sure the syntax highlighting is using the proper class
-		SqlFormatter::$pre_attributes = "class='prettyprint linenums lang-sql'";
+        if (!isset($environments[$report->options['Environment']][$report->options['Database']])) {
+            throw new \Exception(
+                "No {$report->options['Database']} database defined for environment '{$report->options['Environment']}'"
+            );
+        }
+
+        //make sure the syntax highlighting is using the proper class
+        SqlFormatter::$pre_attributes = "class='prettyprint linenums lang-sql'";
 
         $object = spyc_load($report->raw_query);
 
         $report->raw_query = array();
-		//if there are any included reports, add the report sql to the top
-		if(isset($report->options['Includes'])) {
-			$included_sql = '';
-			foreach($report->options['Includes'] as &$included_report) {
-				$included_sql .= trim($included_report->raw_query)."\n";
-			}
-            if (strlen($included_sql) > 0) {
-			    $report->raw_query[] = $included_sql;
+        //if there are any included reports, add the report sql to the top
+        if (isset($report->options['Includes'])) {
+            $included_sql = '';
+            foreach ($report->options['Includes'] as &$included_report) {
+                $included_sql .= trim($included_report->raw_query)."\n";
             }
-		}
+            if (strlen($included_sql) > 0) {
+                $report->raw_query[] = $included_sql;
+            }
+        }
 
         $report->raw_query[] = $object;
 
-		//set a formatted query here for debugging.  It will be overwritten below after macros are substituted.
+        //set a formatted query here for debugging.  It will be overwritten below after macros are substituted.
         //We can not set the query here - it's not a query just yet...
-		//$report->options['Query_Formatted'] = SqlFormatter::format($report->raw_query);
-	}
-	
-	public static function openConnection(&$report) {
-		if(isset($report->conn)) return;
-		
-		$environments = PhpReports::$config['environments'];
-		$config = $environments[$report->options['Environment']][$report->options['Database']];
-		
-		if(!($report->conn = ADONewConnection($config['uri']))) {
-			throw new Exception('Could not connect to the database: '.$report->conn->ErrorMsg());
-		}
-	}
-	
-	public static function closeConnection(&$report) {
-		if (!isset($report->conn)) return;
-		if ($report->conn->IsConnected()) {
-			$report->conn->Close();
-		}
-		unset($report->conn);
-	}
-	
-	public static function getVariableOptions($params, &$report) {
+        //$report->options['Query_Formatted'] = SqlFormatter::format($report->raw_query);
+    }
+
+    public static function openConnection(&$report)
+    {
+        if (isset($report->conn)) {
+            return;
+        }
+
+        $environments = PhpReports::$config['environments'];
+        $config = $environments[$report->options['Environment']][$report->options['Database']];
+
+        if (!($report->conn = ADONewConnection($config['uri']))) {
+            throw new \Exception('Could not connect to the database: '.$report->conn->ErrorMsg());
+        }
+    }
+
+    public static function closeConnection(&$report)
+    {
+        if (!isset($report->conn)) {
+            return;
+        }
+        if ($report->conn->IsConnected()) {
+            $report->conn->Close();
+        }
+        unset($report->conn);
+    }
+
+    public static function getVariableOptions($params, &$report)
+    {
         $report->conn->SetFetchMode(ADODB_FETCH_NUM);
         $query = 'SELECT DISTINCT '.$params['column'].' FROM '.$params['table'];
-		
-		if(isset($params['where'])) {
-			$query .= ' WHERE '.$params['where'];
-		}
+
+        if (isset($params['where'])) {
+            $query .= ' WHERE '.$params['where'];
+        }
 
         $macros = $report->macros;
-        foreach($macros as $key=>$value) {
-            if(is_array($value)) {
-                foreach($value as $key2=>$value2) {
+        foreach ($macros as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $key2 => $value2) {
                     $value[$key2] = mysql_real_escape_string(trim($value2));
                 }
                 $macros[$key] = $value;
-            }
-            else {
+            } else {
                 $macros[$key] = mysql_real_escape_string($value);
             }
 
-            if($value === 'ALL') $macros[$key.'_all'] = true;
+            if ($value === 'ALL') {
+                $macros[$key.'_all'] = true;
+            }
         }
 
         //add the config and environment settings as macros
         $macros['config'] = PhpReports::$config;
         $macros['environment'] = PhpReports::$config['environments'][$report->options['Environment']];
 
-		$result = $report->conn->Execute(PhpReports::renderString($query, $macros));
-		
-		if (!$result) {
-			throw new Exception("Unable to get variable options: ".$report->conn->ErrorMsg());
-		}
+        $result = $report->conn->Execute(PhpReports::renderString($query, $macros));
 
-		$options = array();
-		
-		if(isset($params['all']) && $params['all']) {
+        if (!$result) {
+            throw new \Exception("Unable to get variable options: ".$report->conn->ErrorMsg());
+        }
+
+        $options = array();
+
+        if (isset($params['all']) && $params['all']) {
             $options[] = 'ALL';
         }
 
@@ -105,37 +116,39 @@ class AdoPivotReportType extends ReportTypeBase
         }
 
         return $options;
-	}
-	
-	public static function run(&$report) {
+    }
+
+    public static function run(&$report)
+    {
         $report->conn->SetFetchMode(ADODB_FETCH_ASSOC);
         $rows = array();
 
-		$macros = $report->macros;
-		foreach($macros as $key=>$value) {
-			if(is_array($value)) {
-				$first = true;
-				foreach($value as $key2=>$value2) {
-					$value[$key2] = mysql_real_escape_string(trim($value2));
-					$first = false;
-				}
-				$macros[$key] = $value;
-			}
-			else {
-				$macros[$key] = mysql_real_escape_string($value);
-			}
-			
-			if($value === 'ALL') $macros[$key.'_all'] = true;
-		}
-		
-		//add the config and environment settings as macros
-		$macros['config'] = PhpReports::$config;
-		$macros['environment'] = PhpReports::$config['environments'][$report->options['Environment']];
+        $macros = $report->macros;
+        foreach ($macros as $key => $value) {
+            if (is_array($value)) {
+                $first = true;
+                foreach ($value as $key2 => $value2) {
+                    $value[$key2] = mysql_real_escape_string(trim($value2));
+                    $first = false;
+                }
+                $macros[$key] = $value;
+            } else {
+                $macros[$key] = mysql_real_escape_string($value);
+            }
+
+            if ($value === 'ALL') {
+                $macros[$key.'_all'] = true;
+            }
+        }
+
+        //add the config and environment settings as macros
+        $macros['config'] = PhpReports::$config;
+        $macros['environment'] = PhpReports::$config['environments'][$report->options['Environment']];
 
         $raw_sql = "";
         foreach ($report->raw_query as $qry) {
             if (is_array($qry)) {
-                foreach ($qry as $key=>$value) {
+                foreach ($qry as $key => $value) {
                     // TODO handle arrays better
                     if (!is_bool($value) && !is_array($value)) {
                         $qry[$key] = PhpReports::renderString($value, $macros);
@@ -158,26 +171,28 @@ class AdoPivotReportType extends ReportTypeBase
         //split into individual queries and run each one, saving the last result
         $queries = SqlFormatter::splitQuery($sql);
 
-        foreach($queries as $query) {
+        foreach ($queries as $query) {
             if (!is_array($query)) {
                 //skip empty queries
                 $query = trim($query);
-                if(!$query) continue;
+                if (!$query) {
+                    continue;
+                }
 
                 $result = $report->conn->Execute($query);
-                if(!$result) {
-                    throw new Exception("Query failed: ".$report->conn->ErrorMsg());
+                if (!$result) {
+                    throw new \Exception("Query failed: ".$report->conn->ErrorMsg());
                 }
 
                 //if this query had an assert=empty flag and returned results, throw error
-                if(preg_match('/^--[\s+]assert[\s]*=[\s]*empty[\s]*\n/',$query)) {
-                    if($result->GetAssoc()) {
-                        throw new Exception("Assert failed.  Query did not return empty results.");
+                if (preg_match('/^--[\s+]assert[\s]*=[\s]*empty[\s]*\n/', $query)) {
+                    if ($result->GetAssoc()) {
+                        throw new \Exception("Assert failed.  Query did not return empty results.");
                     }
                 }
             }
         }
 
         return $result->GetArray();
-	}
+    }
 }
