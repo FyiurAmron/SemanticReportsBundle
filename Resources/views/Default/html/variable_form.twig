@@ -11,11 +11,18 @@
         </div>
         <div class="content">
             <fieldset id="variables-fieldset">
+                <table>
                 {% for var in vars %}
                     {% block variable_form_row %}
-                        <div class='field variable'>
+                        <tr class='inline field variable'>
                             {% block variable_form_row_label %}
-                            <label for='var_{{var.key}}' class='col-sm-2 control-label'>{{var.display}}</label>
+                            <td>
+                                <div class="inline field">
+                                    <label for='var_{{var.key}}' class='col-sm-2 control-label'>{{var.display}}</label>
+                                </div>
+                            </td>
+                            <td  style="padding: 7px;">
+                                <div class="inline field">
                             {% endblock %}
                                 {% block variable_form_row_modifier_input %}
                                     {% if var.modifier_options is defined %}
@@ -28,7 +35,7 @@
                                 {% endblock %}
                                 {% block variable_form_row_input %}
                                     {% if var.is_select is defined %}
-                                        <select class="ui fluid search dropdown"
+                                        <select class="ui  search dropdown"
                                             name='macros[{{var.key}}]{% if var.is_multiselect is defined %}[]{% endif %}'
                                             id='var_{{var.key}}'
                                             {% if var.is_multiselect is defined %}multiple=multiple size={{var.choices}}{% endif %}
@@ -42,15 +49,17 @@
                                     {% elseif var.type == "daterange" %}
                                         <input type='hidden' name='macros[{{var.key}}][start]' id='var_{{var.key}}_start' value='{{var.value.start|date('Y-m-d H:i:s')}}' />
                                         <input type='hidden' name='macros[{{var.key}}][end]' id='var_{{var.key}}_end' value='{{var.value.end|date('Y-m-d H:i:s')}}' />
-                                        <div class="ui daterangepicker_holder button md-raised" data-var="{{var.key}}">
+                                        <div class="ui labeled button daterangepicker_holder" data-var="{{var.key}}">
+                                            <span class="ui basic button">
+                                                {% if var.value.start and var.value.end %}
+                                                    {{ var.value.start|date('F j, Y') }} - {{ var.value.end|date('F j, Y') }}
+                                                {% else %}
+                                                    <em>no date range selected</em>
+                                                {% endif %}
+                                            </span>
+                                            <div class="ui basic left pointing label">
                                                 <i class="calendar icon"></i>
-                                                <span>
-                                                    {% if var.value.start and var.value.end %}
-                                                        {{ var.value.start|date('F j, Y') }} - {{ var.value.end|date('F j, Y') }}
-                                                    {% else %}
-                                                        <em>no date range selected</em>
-                                                    {% endif %}
-                                                </span> <b class="caret"></b>
+                                            </div>
                                         </div>
                                     {% elseif var.type == "date" %}
                                         <div class="input-append date datepicker_holder" data-date="{{var.value|date('Y-m-d')}}" data-date-format="yyyy-mm-dd">
@@ -66,16 +75,25 @@
                                         <span class='help-inline'>{{ var.description|raw }}</span>
                                     {% endif %}
                                 {% endblock %}
-
-                        </div>
+                                </div>
+                            </td>
+                        </tr>
                     {% endblock %}
                 {% endfor %}
-                <div class="field">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button class="ui button md-raised" id="submitBtn">Run Report</button>
-                    </div>
-                </div>
+                    <tr>
+                        <td></td>
+                        <td style="padding: 7px;">
+                            <div class="field">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button class="ui basic green button" id="submitBtn">Run Report <i class="play icon" style="padding-left: 10px;"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
             </fieldset>
+
         </div>
     </form>
 
