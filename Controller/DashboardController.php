@@ -12,6 +12,8 @@ class DashboardController extends Controller
 
     public function setContainer(ContainerInterface $container = null)
     {
+        //todo we are now setting dashboardDirectory parameter to null in the DI class
+        //we should disable the route to get here or do something if that is not set
         parent::setContainer($container);
         $this->dashboardDirectory = $this->container->getParameter('dashboardDirectory');
         $this->defaultFileExtensionMapping = $this->container->getParameter('default_file_extension_mapping');

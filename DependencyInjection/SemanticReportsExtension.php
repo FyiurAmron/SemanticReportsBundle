@@ -23,7 +23,11 @@ class SemanticReportsExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('reportDirectory', $config['report_directory']);
-        $container->setParameter('dashboardDirectory', $config['dashboard_directory']);
+        if (isset($config['dashboard_directory'])) {
+            $container->setParameter('dashboardDirectory', $config['dashboard_directory']);
+        } else {
+            $container->setParameter('dashboardDirectory', null);
+        }
         $container->setParameter('default_file_extension_mapping', $config['default_file_extension_mapping']);
         $container->setParameter('environments', $config['environments']);
         $container->setParameter('report_formats', $config['report_formats']);
