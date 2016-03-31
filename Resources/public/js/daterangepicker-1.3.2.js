@@ -30,8 +30,8 @@
             '<label for="daterangepicker_end"></label>' +
             '<input class="input-mini" type="text" name="daterangepicker_end" value="" disabled="disabled" />' +
             '</div>' +
-            '<button class="applyBtn" disabled="disabled"></button>&nbsp;' +
-            '<button class="cancelBtn"></button>' +
+            '<div><button class="applyBtn" disabled="disabled"></button>&nbsp;' +
+            '<button class="cancelBtn"></button></div>' +
             '</div>' +
             '</div>' +
             '</div>';
@@ -115,9 +115,9 @@
             if (this.element.hasClass('pull-right'))
                 this.opens = 'left';
 
-            this.buttonClasses = ['btn', 'btn-small'];
-            this.applyClass = 'btn-success';
-            this.cancelClass = 'btn-default';
+            this.buttonClasses = ['ui', 'basic'];
+            this.applyClass = 'green button';
+            this.cancelClass = 'red button';
 
             this.format = 'MM/DD/YYYY';
             this.separator = ' - ';

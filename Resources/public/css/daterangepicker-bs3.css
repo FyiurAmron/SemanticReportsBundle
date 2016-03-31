@@ -8,6 +8,10 @@
  * Built for http://www.improvely.com
  */
 
+.daterangepicker {
+    border: 1px solid black;
+}
+
 .daterangepicker.dropdown-menu {
     max-width: none;
     z-index: 3000;
@@ -24,7 +28,7 @@
 }
 
 .daterangepicker .ranges {
-    width: 160px;
+    width: 174px;
     text-align: left;
 }
 
