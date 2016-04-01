@@ -24,7 +24,7 @@ class TextReportFormat extends ReportFormatBase
         }
         $return = "";
         foreach ($report->options['DataSets'] as $i => $dataset) {
-            if (isset($dataset['title'])){
+            if (isset($dataset['title'])) {
                 $return .= $dataset['title'] . "\n";
             }
 
@@ -62,7 +62,9 @@ class TextReportFormat extends ReportFormatBase
                 $value = $value->getValue();
 
                 $length = strlen($value);
-                if ($length > $sizes[$key]) $sizes[$key] = $length; // get largest result size
+                if ($length > $sizes[$key]) {
+                    $sizes[$key] = $length; // get largest result size
+                }
             }
         }
 

@@ -23,14 +23,16 @@ class XmlReportFormat extends ReportFormatBase
             // If all the datasets should be included
             if ($datasets === 'all') {
                 $datasets = array_keys($report->options['DataSets']);
-            } // If just a single dataset was specified, make it an array
-            else if (!is_array($datasets)) {
+            } elseif (!is_array($datasets)) { // If just a single dataset was specified, make it an array
                 $datasets = explode(',', $datasets);
             }
         } else {
             $i = 0;
-            if (isset($_GET['dataset'])) $i = $_GET['dataset'];
-            elseif (isset($report->options['default_dataset'])) $i = $report->options['default_dataset'];
+            if (isset($_GET['dataset'])) {
+                $i = $_GET['dataset'];
+            } elseif (isset($report->options['default_dataset'])) {
+                $i = $report->options['default_dataset'];
+            }
             $i = intval($i);
 
             $datasets = array($i);

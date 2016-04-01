@@ -6,14 +6,15 @@ use Eidsonator\SemanticReportsBundle\lib\PhpReports\ReportFormatBase;
 
 abstract class XlsReportBase extends ReportFormatBase
 {
-    private static function columnLetter($c){
+    private static function columnLetter($c)
+    {
         $letter = '';
         $c = intval($c);
         if ($c <= 0) {
             return $letter;
         }
 
-        while($c != 0){
+        while ($c != 0) {
             $p = ($c - 1) % 26;
             $c = intval(($c - $p) / 26);
             $letter = chr(65 + $p);// . $letter;
@@ -34,9 +35,9 @@ abstract class XlsReportBase extends ReportFormatBase
                                      ->setSubject("")
                                      ->setDescription("");
 
-        foreach($report->options['DataSets'] as $i=>$dataset) {
+        foreach ($report->options['DataSets'] as $i => $dataset) {
             $objPHPExcel->createSheet($i);
-            self::addSheet($objPHPExcel,$dataset,$i);
+            self::addSheet($objPHPExcel, $dataset, $i);
         }
 
         // Set the active sheet to the first one
@@ -44,34 +45,37 @@ abstract class XlsReportBase extends ReportFormatBase
 
         return $objPHPExcel;
     }
-    public static function addSheet($objPHPExcel,$dataset, $i) {
+    public static function addSheet($objPHPExcel, $dataset, $i)
+    {
         $rows = array();
         $row = array();
         $cols = 0;
         $first_row = $dataset['rows'][0];
-        foreach($first_row['values'] as $key=>$value){
+        foreach ($first_row['values'] as $key => $value) {
             array_push($row, $value->key);
             $cols++;
         }
         array_push($rows, $row);
         $row = array();
 
-        foreach($dataset['rows'] as $r) {
-            foreach($r['values'] as $key=>$value){
+        foreach ($dataset['rows'] as $r) {
+            foreach ($r['values'] as $key => $value) {
                 array_push($row, $value->getValue());
             }
             array_push($rows, $row);
             $row = array();
         }
 
-        $objPHPExcel->setActiveSheetIndex($i)->fromArray($rows, NULL, 'A1');
+        $objPHPExcel->setActiveSheetIndex($i)->fromArray($rows, null, 'A1');
         $objPHPExcel->getActiveSheet()->setAutoFilter('A1:'.self::columnLetter($cols).count($rows));
         for ($a = 1; $a <= $cols; $a++) {
             $objPHPExcel->getActiveSheet()->getColumnDimension(self::columnLetter($a))->setAutoSize(true);
         }
 
-        if(isset($dataset['title'])) $objPHPExcel->getActiveSheet()->setTitle($dataset['title']);
+        if (isset($dataset['title'])) {
+            $objPHPExcel->getActiveSheet()->setTitle($dataset['title']);
+        }
 
         return $objPHPExcel;
-	}
+    }
 }
