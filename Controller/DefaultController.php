@@ -49,19 +49,6 @@ class DefaultController extends Controller
         return $response;
     }
 
-    protected function urlDownload($url)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $output = curl_exec($ch);
-        curl_close($ch);
-
-        return $output;
-    }
-
     protected function generateReportListRecursive($reports = null, &$parts)
     {
         if ($reports === null) {
