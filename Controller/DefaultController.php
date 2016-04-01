@@ -44,12 +44,12 @@ class DefaultController extends Controller
 
         $response = new JsonResponse();
         $parts = [];
-        $this->generateReportListRecursive(null, $parts);
+        $this->generateReportListRecursive($parts);
         $response->setData($parts);
         return $response;
     }
 
-    protected function generateReportListRecursive($reports = null, &$parts)
+    protected function generateReportListRecursive(&$parts, $reports = null)
     {
         if ($reports === null) {
             $errors = array();
@@ -75,7 +75,7 @@ class DefaultController extends Controller
                 if (!isset($report['Title']) || !$report['Title']) {
                     continue;
                 }
-                $this->generateReportListRecursive($report['children'], $parts);
+                $this->generateReportListRecursive($parts, $report['children']);
             } else {
                 //skip if report is marked as dangerous
                 if ((isset($report['stop']) && $report['stop']) || isset($report['Caution']) || isset($report['warning'])) {
