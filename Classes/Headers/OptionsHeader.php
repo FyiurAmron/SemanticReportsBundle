@@ -7,7 +7,7 @@ use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 class OptionsHeader extends HeaderBase
 {
-    static $validation = array(
+    public static $validation = array(
         'limit'=>array(
             'type'=>'number',
             'default'=>null
@@ -104,46 +104,47 @@ class OptionsHeader extends HeaderBase
         // We need to catch those and add the header to the report
         $formatting_header = array();
 
-        foreach ($params as $key=>$value) {
+        foreach ($params as $key => $value) {
             // This is a FORMATTING parameter
-            if(in_array($key,array('limit','noborder','vertical','table','showcount','font','nodata','selectable'))) {
+            $formatting_array = ['limit', 'noborder', 'vertical', 'table', 'showcount', 'font', 'nodata', 'selectable'];
+            if (in_array($key, $formatting_array)) {
                 $formatting_header[$key] = $value;
                 continue;
             }
 
             //some of the keys need to be uppercase (for legacy reasons)
-            if(in_array($key,array('database','mongodatabase','cache'))) $key = ucfirst($key);
+            if (in_array($key, ['database', 'mongodatabase', 'cache'])) {
+                $key = ucfirst($key);
+            }
 
             $report->options[$key] = $value;
 
             //if the value is different from the default, it can be exported
-            if($value && $value !== self::$validation[$key]['default']) {
+            if ($value && $value !== self::$validation[$key]['default']) {
                 //only export some of the options
-                if(in_array($key,array('access','Cache'),true)) {
-                    $report->exportHeader('Options',array($key=>$value));
+                if (in_array($key, array('access', 'Cache'), true)) {
+                    $report->exportHeader('Options', [$key => $value]);
                 }
             }
         }
 
-        if($formatting_header)
-        {
+        if ($formatting_header) {
             $formatting_header['dataset'] = true;
-            $report->parseHeader('Formatting',$formatting_header);
+            $report->parseHeader('Formatting', $formatting_header);
         }
     }
 
     public static function parseShortcut($value)
     {
-        $options = explode(',',$value);
+        $options = explode(',', $value);
 
         $params = array();
 
-        foreach($options as $v) {
-            if(strpos($v,'=')!==false) {
-                list($k,$v) = explode('=',$v,2);
+        foreach ($options as $v) {
+            if (strpos($v, '=')!==false) {
+                list($k, $v) = explode('=', $v, 2);
                 $v = trim($v);
-            }
-            else {
+            } else {
                 $k = $v;
                 $v=true;
             }
