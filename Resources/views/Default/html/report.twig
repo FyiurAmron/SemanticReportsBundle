@@ -70,16 +70,16 @@
 {% block content %}
     <div class="ui container">
     {% if is_ready %}
-        <div class='row export_links'>
+        <div class='ui export_links'>
         {% block export_links %}
+            <div class="ui" style="margin-bottom: 15px; margin-top: 15px;">
             {% block download_link %}
                 {% if config.report_formats|length > 1 %}
                     {% if DataSets is defined and DataSets|length > 1 %}All Report Tables:{% endif %}
-                    <div class="ui compact menu">
-                        <div class="ui simple dropdown item">
+                        <div class="ui pointing dropdown basic button">
                             Download/show as
                             <i class='dropdown icon'></i>
-                            <div class="menu">
+                            <div class="pointing menu">
                                 {% for format in config.report_formats|keys %}
                                     {% if config.report_formats[format] == 'divider' %}
                                         <div class="divider"></div>
@@ -89,7 +89,6 @@
                                 {% endfor %}
                             </div>
                         </div>
-                    </div>
                 {% else %}
                     <a href='{{ url('eidsonator_report_path') }}/{{config.report_formats|keys[0]}}?{{report_querystring}}' class='report_link btn'>
                         <i class='icon-download'></i> Download {{config.report_formats[config.report_formats|keys[0]]}}
@@ -98,9 +97,9 @@
             {% endblock %}
             {% if config.mail_settings is defined and  config.mail_settings.enabled %}
                 {% block email_report_button %}
-                    <div class="ui compact menu">
-                        <a class="item" id="emailToggle"><i class='mail outline icon'></i> Email Report</a>
-                    </div>
+
+                    <a class="ui basic button" id="emailToggle"><i class='mail outline icon'></i> Email Report</a>
+
                     <div id="emailModal" class="ui mini modal">
                             <div class="header">
                                 <h4 class="modal-title">Email Report</h4>
@@ -122,8 +121,8 @@
                                         <textarea rows='4' id='email-report-modal-message'></textarea>
                                     </div>
                                     <div class="field">
-                                        <button type="button" id="sendReport" class="ui blue button" data-loading-text="Sending">Send Email</button>
-                                        <button type="button" id="emailCancel" class="ui red button">Cancel</button>
+                                        <button type="button" id="sendReport" class="ui basic blue button" data-loading-text="Sending">Send Email</button>
+                                        <button type="button" id="emailCancel" class="ui basic red button">Cancel</button>
                                     </div>
                                 </form>
                         </div>
@@ -131,6 +130,10 @@
 
                     <script>
                         window.onload = function(){
+                            $('.ui.pointing.dropdown').dropdown({
+                                on: 'hover'
+                            });
+
                             $('#emailToggle').click(function(){
                                 $('#emailModal').modal({
                                     closable  : false
@@ -181,6 +184,7 @@
                     </script>
                 {% endblock %}
             {% endif %}
+            </div>
         {% endblock %}
         
     
@@ -193,9 +197,9 @@
         {% endif %}
     {% endif %}
 
-    <div id='report_content'>
+    <div id='report_content' style="margin-top: 15px;">
         {% if not is_ready %}
-            <div class='ui info message'>
+            <div class='ui info message' >
                 <div class="header">
                     <h3>This report needs more information before running.</h3>
                 </div>
