@@ -196,8 +196,15 @@
     <div id='report_content'>
         {% if not is_ready %}
             <div class='ui info message'>
-            This report needs more information before running.
+                <div class="header">
+                    <h3>This report needs more information before running.</h3>
+                </div>
             </div>
+            <script>
+                $('document').ready(function(){
+                    $("#variables-header").click();
+                });
+            </script>
         {% elseif async %}
             {% include "@SemanticReports/Default/html/report_ajax_loading.twig" %}
         {% else %}
