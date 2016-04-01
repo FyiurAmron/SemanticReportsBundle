@@ -6,7 +6,7 @@ use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 class FormattingHeader extends HeaderBase
 {
-    static $validation = [
+    public static $validation = [
         'limit' => [
             'type' => 'number',
             'default' => null
@@ -45,7 +45,9 @@ class FormattingHeader extends HeaderBase
 
     public static function init($params, Report &$report)
     {
-        if (!isset($report->options['Formatting'])) $report->options['Formatting'] = array();
+        if (!isset($report->options['Formatting'])) {
+            $report->options['Formatting'] = array();
+        }
         $report->options['Formatting'][] = $params;
     }
 
@@ -84,7 +86,9 @@ class FormattingHeader extends HeaderBase
             if (is_array($params['dataset'])) {
                 foreach ($params['dataset'] as $i) {
                     if (isset($report->options['DataSets'][$i])) {
-                        if (!isset($formatting[$i])) $formatting[$i] = array();
+                        if (!isset($formatting[$i])) {
+                            $formatting[$i] = array();
+                        }
                         foreach ($copy as $k => $v) {
                             $formatting[$i][$k] = $v;
                         }
@@ -92,14 +96,20 @@ class FormattingHeader extends HeaderBase
                 }
             } elseif ($params['dataset'] === true && isset($report->options['DataSets'])) { // All datasets
                 foreach ($report->options['DataSets'] as $i => $dataset) {
-                    if (!isset($formatting[$i])) $formatting[$i] = array();
+                    if (!isset($formatting[$i])) {
+                        $formatting[$i] = array();
+                    }
                     foreach ($copy as $k => $v) {
                         $formatting[$i][$k] = $v;
                     }
                 }
             } else { // Single dataset
-                if (!isset($report->options['DataSets'][$params['dataset']])) continue;
-                if (!isset($formatting[$params['dataset']])) $formatting[$params['dataset']] = array();
+                if (!isset($report->options['DataSets'][$params['dataset']])) {
+                    continue;
+                }
+                if (!isset($formatting[$params['dataset']])) {
+                    $formatting[$params['dataset']] = array();
+                }
                 foreach ($copy as $k => $v) {
                     $formatting[$params['dataset']][$k] = $v;
                 }
@@ -134,7 +144,6 @@ class FormattingHeader extends HeaderBase
 
                     if ($selectedKey !== null) {
                         foreach ($report->options['DataSets'][$i]['rows'] as $key => $row) {
-
                             if (!in_array($row['values'][$selectedKey]->getValue(), $selected)) {
                                 unset($report->options['DataSets'][$i]['rows'][$key]);
                             }
