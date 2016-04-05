@@ -15,42 +15,48 @@
                 <p>{{ item.Description|raw }}</p>
             {% endif %}
             
-			<div class='ui list'>
+			<div class='ui vertical fluid menu'>
 				{% for item in item.children %}
-					<div class="item">
-						{% set h = h + 1 %}
-						{% include "@SemanticReports/Default/html/report_list_item.twig" %}
-						{% set h = h - 1 %}
-					</div>
+					{% set h = h + 1 %}
+					{% include "@SemanticReports/Default/html/report_list_item.twig" %}
+					{% set h = h - 1 %}
 				{% endfor %}
 			</div>
 		</div>
 	{% endif %}
 {% elseif not item.ignore is defined or not item.ignore %}
-	<a class='pull-right' href='{{ url('eidsonator_reports_display', {report : item.get}) }}' style='margin-left: 5px; opacity:.6;'>
-		<img alt='Export CSV File' title='Export CSV File' src="{{ asset('bundles/semanticreports/images/images/document-excel-csv.png') }}"/></a>
-	<a href='{{ url('eidsonator_reports_display', {report : item.get}) }}' id='report_{{item.Id}}'>
-		{{item.Name}}
-		{% if item.stop is defined and item.stop %}
-			<img alt='Stop!' title='Stop!' src="{{ asset('bundles/semanticreports/images/images/traffic-light-red.png') }}"/>
-		{% endif %}
-		{% if item.Caution is defined or item.warning is defined %}
-			<img alt='Caution!' title='Caution!' src="{{ asset('bundles/semanticreports/images/images/prohibition.png') }}"/>
-		{% endif %}
-		{% if item.Variables is defined %}
-			<img alt='Configurable' title='Configurable' src="{{ asset('bundles/semanticreports/images/images/wrench.png') }}"/>
-		{% endif %}
-		{% if item.Charts  is defined%}
-			<img alt='Contains graphs/charts' title='Contains graphs/charts' src="{{ asset('bundles/semanticreports/images/images/chart.png') }}"/>
-		{% endif %}
-		{% if item.Detail is defined %}
-			<img alt='Contains drill down links' title='Contains drill down links' src="{{ asset('bundles/semanticreports/images/images/drill.png') }}" />
-		{% endif %}
-		{% if item.expensive is defined %}
-			<img alt='Expensive to run' title='Expensive to run' src="{{ asset('bundles/semanticreports/images/images/money_dollar.png') }}"/>
-		{% endif %}
-		{% if item.Created is defined and item.Created|slice(0,10)|date('U') > date("-2 weeks")|date('U') %}
-			<img alt='Created on {{item.Created|slice(0,10)|date('Y-m-d')}}' title='Created on {{item.Created|slice(0,10)|date('Y-m-d')}}' src="{{ asset('bundles/semanticreports/images/images/new_icon.gif') }}" />
-		{% endif %}
-	</a>
+
+
+		<a class="item" href='{{ url('eidsonator_reports_display', {report : item.get}) }}' id='report_{{item.Id}}'>
+			{{item.Name}}
+			<div class="ui label">
+				{% if item.stop is defined and item.stop %}
+					<i class="bomb icon" title='Stop!'></i>
+				{% endif %}
+				{% if item.Caution is defined or item.warning is defined %}
+					<i class="warning sign icon" title='Caution!'></i>
+				{% endif %}
+				{% if item.Variables is defined %}
+					<i class="configure icon" title='Configurable'></i>
+				{% endif %}
+				{% if item.Charts  is defined%}
+					<i class="bar chart icon" title='Contains graphs/charts'></i>
+				{% endif %}
+				{% if item.Detail is defined %}
+					<i class="bullseye icon" title='Contains drill down links'></i>
+				{% endif %}
+				{% if item.expensive is defined %}
+					<i class="money icon" title='Expensive to run'></i>
+				{% endif %}
+				{% if item.Created is defined and item.Created|slice(0,10)|date('U') > date("-2 weeks")|date('U') %}
+					<i class="calendar icon" title='Created on {{item.Created|slice(0,10)|date('Y-m-d')}}'></i>
+				{% endif %}
+			</div>
+		</a>
+
+
+		{#<a class='' href='{{ url('eidsonator_reports_display', {report : item.get}) }}' style='margin-left: 5px; opacity:.6;'>#}
+			{#<img alt='Export CSV File' title='Export CSV File' src="{{ asset('bundles/semanticreports/images/images/document-excel-csv.png') }}"/>#}
+		{#</a>#}
+
 {% endif %}
