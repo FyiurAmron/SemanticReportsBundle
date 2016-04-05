@@ -6,7 +6,11 @@
 		<a name="report_{{item.Id}}" href='#' style="display: none;">.</a>
 		<div class="title">
 			<h{{h < 5 ? h : 5}} class="{% if not item.Title %}no_title{% endif %}">
-				{% if item.Title %}{{item.Title}}{% else %}{{item.Name}}{% endif %}
+				{% if item.Title %}
+					{{item.Title}}
+				{% else %}
+					{{item.Name}}
+				{% endif %}
 				<i class="dropdown icon"></i>
 			</h{{h < 5 ? h : 5}}>
 		</div>
