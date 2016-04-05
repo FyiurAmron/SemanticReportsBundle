@@ -4,10 +4,6 @@
 
 {% set breadcrumb = {"Report List": true} %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('bundles/semanticreports/css/report_list.css') }}" />
-{% endblock %}
 
 {% block header %}
 {% endblock %}
@@ -52,10 +48,10 @@
 
 		{% block report_list %}
 			<a name="reportlist"></a>
-			{% for item in reports %}
+			{% for item in reports if item.children %}
 			<div class="report_list">
 				{% if not loop.first %}
-						<a href="#" class="ui right floated mini white button" style="font-size: 12px; font-weight:normal; margin-top: 5px;">top</a>
+					<a href="#" class="ui right floated mini white button" style="font-size: 12px; font-weight:normal; margin-top: 5px;">top</a>
 					<br>
 				{% endif %}
 				<div class="ui accordion segment">
