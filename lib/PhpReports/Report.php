@@ -2,13 +2,14 @@
 
 namespace Eidsonator\SemanticReportsBundle\lib\PhpReports;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\Container;
 use Eidsonator\SemanticReportsBundle\Classes\Headers;
 use Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
 
-class Report extends ContainerAware
+class Report
 {
+    use ContainerAwareTrait;
     public $report;
     public $macros = array();
     public $exported_headers = array();
