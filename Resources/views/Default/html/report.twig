@@ -231,8 +231,10 @@
         });
     </script>
     <script>
+        {% if not is_ready %}
         $('document').ready(function(){
             $("#variables-header").click();
         });
+        {% endif %}
     </script>
 {% endblock %}
