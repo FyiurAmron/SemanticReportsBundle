@@ -1,9 +1,9 @@
 {% extends "@SemanticReports/Default/html/page.twig" %}
 
-{% if options.Name %}
+{% if options and options.Name %}
 	{% set Name = options.Name %}
 {% else %}
-	{% set Name = report %}
+	{% set Name = report.report %}
 {% endif %}
 	
 {% block title %}
@@ -55,11 +55,11 @@
 	editor.setTheme("ace/theme/eclipse");
 	
 	//set the mode
-	{% if options.Type == 'Mysql' %}
+	{% if options and options.Type == 'Mysql' %}
     editor.getSession().setMode("ace/mode/sql");
-    {% elseif options.Type == 'Mongo' %}
+    {% elseif options and options.Type == 'Mongo' %}
     editor.getSession().setMode("ace/mode/javascript");
-    {% elseif options.Type == 'Php' %}
+    {% elseif options and options.Type == 'Php' %}
     editor.getSession().setMode("ace/mode/php");
     {% else %}
 	editor.getSession().setMode("ace/mode/{{extension}}");

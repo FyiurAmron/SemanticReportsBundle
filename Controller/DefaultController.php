@@ -25,6 +25,10 @@ class DefaultController extends Controller
             define('REPORT_DIRECTORY', $this->reportDirectory);
         }
     }
+    
+    public function copyTwig() {
+        return (clone $this)->get('twig');
+    }
 
     public function listReportsAction()
     {
@@ -130,21 +134,21 @@ class DefaultController extends Controller
 
     public function displayRawAction(Request $request)
     {
-        return $this->display($request, "Raw");
+        return $this->display($request, 'Raw');
     }
 
     public function displayCsvAction(Request $request)
     {
-        return $this->display($request, "Csv");
+        return $this->display($request, 'Csv');
     }
 
     public function displayJsonAction(Request $request)
     {
-        return $this->display($request, "Json");
+        return $this->display($request, 'Json');
     }
     public function displaySqlAction(Request $request)
     {
-        return $this->display($request, "Sql");
+        return $this->display($request, 'Sql');
     }
     public function displayTableAction(Request $request)
     {
@@ -180,7 +184,7 @@ class DefaultController extends Controller
                 throw $e;
             }
 
-            $twigArray =  $className::display($report, $request);
+            $twigArray = $className::display($report, $request);
             if (is_array($twigArray)) {
                 $reportURL =  $this->generateUrl('eidsonator_generate_report');
                 $report->setBaseURL($reportURL);
@@ -195,7 +199,7 @@ class DefaultController extends Controller
             } else {
                 $title = 'broken';
             }
-            return  $this->render('@SemanticReports/Default/html/page.twig', array(
+            return $this->render('@SemanticReports/Default/html/page.twig', array(
                 'title'=> $title,
                 'header'=>'<h2>'.$error_header.'</h2>',
                 'error'=>$e->getMessage(),
@@ -217,6 +221,7 @@ class DefaultController extends Controller
         }
     }
 
+    // note: quite buggy ATM
     public function editAction(Request $request)
     {
         $templateVars = array();
@@ -225,27 +230,26 @@ class DefaultController extends Controller
         try {
             $report = new Report($report, [], null, false, $this->container, $this);
             $templateVars = [
-                'report' => $report->report,
+                'report' => $report,
                 'options' => $report->options,
                 'contents' => $report->getRaw(),
+                'report_querystring' => $_SERVER['QUERY_STRING'],                
                 'extension' => $ext
             ];
             $templateVars = $report->getReportVariables($templateVars);
         } catch (\Exception $e) { //if there is an error parsing the report
-            $templateVars = [
-                'report' => $report,
-                'contents' => Report::getReportFileContents($report),
-                'options' => [],
-                'extension' => $ext,
-                'error' => $e
-            ];
+            dump( $report );
+            $templateVars['error'] = $e;
         }
 
         if (isset($_POST['preview'])) {
             $diff = new SimpleDiff();
             $html = "<pre>" . $diff->htmlDiffSummary($templateVars['contents'], $_POST['contents']) . "</pre>";
-            $twig = clone $this->get('twig');
-            $twig->setLoader(new \Twig_Loader_String());
+            //$twig = clone $this->get('twig');
+            //$twig->setLoader(new \Twig_Loader_String());
+//            $env = new \Twig_Environment(new \Twig_Loader_Array([]));
+//            $template = $env->createTemplate();
+            
             return new Response($html);
         } elseif (isset($_POST['save'])) {
             $html = $report->setReportFileContents($_POST['contents']);
@@ -320,13 +324,11 @@ class DefaultController extends Controller
                         $return[] = $data;
                     }
                 } catch (\Exception $e) {
-                    if (!$errors) {
-                        $errors = [];
-                    }
-                    $errors[] = array(
-                        'report'=>$name,
-                        'exception'=>$e
-                    );
+                    dump( $e );
+                    $errors[] = [
+                        'report' => $name,
+                        'exception' => $e
+                    ];
                 }
             }
         }
@@ -376,7 +378,6 @@ class DefaultController extends Controller
             if (!isset($data['Name'])) {
                 $data['Name'] = ucwords(str_replace(array('_', '-'), ' ', basename($report)));
             }
-
             //store parsed report in cache
             FileSystemCache::store($cacheKey, $data);
         }

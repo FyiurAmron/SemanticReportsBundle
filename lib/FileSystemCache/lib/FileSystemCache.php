@@ -17,7 +17,7 @@ class FileSystemCache {
 	 * The root cache directory.  Everything will be cached relative to this directory.
 	 * @var string
 	 */
-	public static $cacheDir = 'cache';
+	public static $cacheDir = '../var/cache';
 	
 	/**
 	 * Generates a cache key to use with store, retrieve, getAndModify, and invalidate
@@ -409,9 +409,7 @@ class FileSystemCacheValue {
 		$this->value = $value;
 		$this->ttl = $ttl;
 		$this->created = time();
-		
-		if($ttl) $this->expires = $this->created + $ttl;
-		else $this->expires = null;
+		$this->expires = ($ttl) ? $this->created + $ttl : null;
 	}
 
 	/**

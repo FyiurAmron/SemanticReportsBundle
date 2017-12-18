@@ -33,7 +33,7 @@ class SemanticReportsExtension extends Extension
         $container->setParameter('report_formats', $config['report_formats']);
         $container->setParameter('mail_settings', $config['mail_settings']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+//        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+//        $loader->load('services.yml');
     }
 }

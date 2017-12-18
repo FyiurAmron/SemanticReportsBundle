@@ -206,7 +206,8 @@ class Report
             $ttl = 600;
         }
 
-        FileSystemCache::store($this->getCacheKey(), $this->options, 'results', $ttl);
+//        FileSystemCache::store($this->getCacheKey(), $this->options, 'results', $ttl);
+        FileSystemCache::store($this->getCacheKey(), $this->options, $ttl);
     }
 
     protected function parseHeaders()

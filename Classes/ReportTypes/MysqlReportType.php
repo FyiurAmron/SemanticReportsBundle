@@ -167,9 +167,21 @@ class MysqlReportType extends ReportTypeBase
 
         //expand macros in query
         $macros = $report->getReportVariables($macros);
-        $twig = clone $report->getController()->get('twig');
-        $twig->setLoader(new \Twig_Loader_String());
-        $sql = $twig->render($report->raw_query, $macros);
+//        $twig = clone $report->getController()->get('twig');
+        $twig = $report->getController()->copyTwig();        
+        //$env = new \Twig_Environment(new \Twig_Loader_Array());
+//        $template = $env->createTemplate($report->raw_query);
+        $template = $twig->createTemplate($report->raw_query);
+  
+//        dump( $macros );
+        $sql = $template->render( $macros );
+//        $env = new \Twig_Environment(new \Twig_Loader_Array([]));
+//        $template = $env->createTemplate();
+//        $sql = $template->render($report->raw_query, $macros);
+
+//        $twig->setLoader(new \Twig_Loader_String());
+//        $twig->setLoader(new \Twig_Loader_Array());
+//        $sql = $twig->render($report->raw_query, $macros);
 
         $report->options['Query'] = $sql;
 
