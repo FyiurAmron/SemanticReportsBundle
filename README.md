@@ -1,9 +1,10 @@
-# Semantic-ui Reports Bundle
+# Semantic-ui Reports Bundle FORK
 
-**Now works with Symfony2.x and Symfony3.x**
+** Symfony 4.x compatible **
+
+heavily based on php-reports by jdorn
 
 A Symfony bundle for managing and displaying nice looking, exportable reports from any data source, including SQL and MongoDB.  
-
 
 Major features include:
 

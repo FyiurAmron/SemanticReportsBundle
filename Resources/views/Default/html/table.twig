@@ -5,7 +5,7 @@
 			{% set dataset_id = loop.index - 1 %}
 			{% if config.report_formats|length > 1 %}
 				<div class="ui pointing dropdown basic button">
-					Download/show as
+					Zapisz/pokaż jako:
 					<i class="dropdown icon"></i>
 					<div class="pointing menu">
 						{% for format in config.report_formats|keys %}
@@ -37,6 +37,7 @@
 	{% if Formatting is not defined or not Formatting[loop.index-1].nodata %}
 	<table{% if inline_email is not defined %} id='result_table_{{loop.index}}' class='result_table ui celled striped table'{% else %} border="1" cellspacing="0"{% endif %}>
 		{% if dataset.vertical is defined %}
+	<!--
 		<thead>
 			<tr class='header'>
 				{% for value in dataset.vertical[0].values %}
@@ -46,7 +47,8 @@
 				{% endfor %}
 			</tr>
 		</thead>
-		{% if dataset.footer %}
+    -->
+		{% if dataset.footer is defined %}
 		<tfoot>
 			{% for row in dataset.footer %}
 				<tr>
@@ -67,7 +69,7 @@
 				</{{ tag }}>
 				{% endfor %}
 			</tr>
-			{% endfor %}
+	        {% endfor %}
 		</tbody>
 		{% else %}
 		<thead>

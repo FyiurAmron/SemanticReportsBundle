@@ -9,7 +9,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="ui grid">
+<div class="container ui grid">
+<!--
 	<div class="four wide column">
 		<div id="table_of_contents" class="ui vertical menu">
 		{% block table_of_contents %}
@@ -19,8 +20,9 @@
 		{% endblock %}
 		</div>
 	</div>
+-->
 	<div id="report_list" class="eight wide column">
-        <h1 class="visible-phone">All Reports</h1>
+        <h2 class="visible-phone">Rowerowy Maj - raporty</h2>
 		{% block report_errors %}
 			{% if report_errors is not empty %}
                 <div class="ui accordion segment">
@@ -54,7 +56,7 @@
 					<a href="#" class="ui right floated mini white button" style="font-size: 12px; font-weight:normal; margin-top: 5px;">top</a>
 					<br>
 				{% endif %}
-				<div class="ui accordion segment">
+				<div class="">
 					{% include "@SemanticReports/Default/html/report_list_item.twig" %}
 				</div>
 			</div>

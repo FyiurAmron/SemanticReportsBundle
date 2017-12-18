@@ -1,8 +1,11 @@
 <?php
 namespace Eidsonator\SemanticReportsBundle\Classes\Headers;
 
-use Eidsonator\SemanticReportsBundle\lib\PhpReports\HeaderBase;
-use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
+use Eidsonator\SemanticReportsBundle\lib\PhpReports\{
+  HeaderBase,
+  Report,
+  ReportValue
+};
 
 class FormattingHeader extends HeaderBase
 {

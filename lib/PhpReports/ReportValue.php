@@ -62,18 +62,16 @@ class ReportValue
 		$type = $this->_getType($value);
 		
 		if($type === null) {
-			if($html && $this->is_html) return '&nbsp;';
-			else return null;
+			return ($html && $this->is_html) ? '&nbsp;' : null;
 		}
 		elseif($type === 'number') {
 			return $value;
 		}
 		elseif($type === 'date') {
-			if($date) return date($date,strtotime($value));
-			else return $value;
+			return ($date) ? date($date,strtotime($value)) : $value;
 		}
 		elseif($type === 'string') {
-			return utf8_encode($value);
+            return $value; // utf8_encode($value);
 		}
 	}
 	

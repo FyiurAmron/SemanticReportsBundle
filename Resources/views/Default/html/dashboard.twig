@@ -85,7 +85,7 @@ $.each(dashboard.reports, function(i,report) {
   if(report.title) {
     container.append($("<h2 class='report-title'>").text(report.title));
   }
-  container.append("<div class='info'><a class='full-link' href='{{ url('eidsonator_reports_display') }}/?"+$.param(report_data)+"'>View full report</a><span class='rendered'></span></div>");
+  container.append("<div class='info'><a class='full-link' href='{{ url('eidsonator_reports_display') }}?"+$.param(report_data)+"'>Pojedynczy raport...</a><span class='rendered'></span></div>");
   
   if(report.description) {
     container.append($("<p class='description'>").text(report.description));
@@ -98,7 +98,7 @@ $.each(dashboard.reports, function(i,report) {
       var report_url = "{{ url('eidsonator_reports_display') }}";
       
       // Loading message
-      holder.html("<p>Loading...</p>");
+      holder.html("<p>Wczytywanie...</p>");
       
       $.get(report_url,report_data,function(response) {
         holder.empty().html(response);

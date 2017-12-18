@@ -53,13 +53,13 @@
                 {% if config.report_formats|length > 1 %}
                     {% if DataSets is defined and DataSets|length > 1 %}All Report Tables:{% endif %}
                         <div class="ui pointing dropdown basic button">
-                            Download/show as
+                            Zapisz/pokaż jako:
                             <i class='dropdown icon'></i>
                             <div class="pointing menu">
                                 {% for format in config.report_formats|keys %}
                                     {% if config.report_formats[format] == 'divider' %}
                                         <div class="divider"></div>
-                                    {% elseif (DataSets is defined and DataSets|length <= 1) or format != 'csv' %}
+                                    {% else %}
                                         <a class="item" href='{{ url('eidsonator_report_path') }}/{{format}}?{% if DataSets is defined and DataSets|length > 1 %}datasets=all&{% endif %}{{report_querystring}}' class='report_link'>{{config.report_formats[format]}}</a>
                                     {% endif %}
                                 {% endfor %}
@@ -106,9 +106,6 @@
 
                     <script>
                         window.onload = function(){
-                            $('.ui.pointing.dropdown').dropdown({
-                                on: 'hover'
-                            });
 
                             $('#emailToggle').click(function(){
                                 $('#emailModal').modal({
@@ -177,7 +174,7 @@
         {% if not is_ready %}
             <div class='ui info message' >
                 <div class="header">
-                    <h3>This report needs more information before running.</h3>
+                    <h3>Ustal niezbędne opcje przed generowaniem raportu.</h3>
                 </div>
             </div>
         {% elseif async %}
@@ -186,7 +183,7 @@
             {% include "@SemanticReports/Default/html/report_content.twig" %}
         {% endif %}
     </div>
-
+<!--
     {% block time_estimate %}
         {% if time_estimate is defined %}        
             <div class="ui accordion" style='margin-top: 20px;'>
@@ -207,6 +204,7 @@
             </div>        
         {% endif %}
     {% endblock %}
+-->
     </div>
 {% endblock %}
 
@@ -225,6 +223,11 @@
     <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.stickytableheaders.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
+    <script>
+        $('.ui.pointing.dropdown').dropdown({
+          on: 'hover'
+        });
+    </script>
     <script type="text/javascript">
         $("#content").on('click','a[data-role="button"]',function(e) {
             e.preventDefault();

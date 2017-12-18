@@ -15,7 +15,7 @@ class DefaultController extends Controller
 {
     private $reportDirectory;
     private $defaultFileExtensionMapping;
-
+    
     public function setContainer(ContainerInterface $container = null)
     {
         parent::setContainer($container);

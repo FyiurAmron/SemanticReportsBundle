@@ -9,7 +9,9 @@
     {% endif %}
 {% endblock %}
 
+<div style="overflow-x: scroll">
 {% include "@SemanticReports/Default/html/table.twig" %}
+</div>
 
 {% if nodata is defined and not nodata %}
 <script type='text/javascript'>
@@ -70,7 +72,7 @@ $(function() {
 {% endif %}
 
 <div class="row">
-    <div class="col-md-12">Query took {{Time}} seconds</div>
+    <div class="col-md-12">Wygenerowanie zabrało {{Time}} sekund.</div>
 </div>
 
 {% block show_query %}
@@ -79,7 +81,7 @@ $(function() {
 		<div class="ui accordion">
 			<div class="title">
 				<i class="dropdown icon"></i>
-				Show Query
+				Pokaż zapytanie SQL
 			</div>
 			<div id='query_holder' class='content' style='padding-left: 20px;'>
 				{{Query_Formatted|raw}}

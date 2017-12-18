@@ -36,11 +36,26 @@
   </head>
 
   <body>	
-    <div class="ui fixed menu">
+    <div class="ui menu">
         <div class="ui container">
+{% block brand %}
+            <a class="header item" href="/rm-panel">
+                <div style="text-align: center;">
+                    <img src="/img/rm.svg" alt="RowerowyMaj" style="display: block;" />
+                    Powrót do panelu
+                </div>
+            </a>                
+{% endblock %}
+
             <a class="header item" href="{{ url('eidsonator_reports_homepage') }}">
-                {% block brand %}Semantic-ui Symfony Reports Bundle{% endblock %}
+                Lista raportów
             </a>   
+<!--
+            <a class="header item" href="{{ url('eidsonator_dashboard_list') }}">
+                Dashboardy
+            </a>   
+-->
+        <!--
         {% block navdropdown %}
             {% if recent_reports is defined %}
                 <div class="ui simple dropdown item">
@@ -53,17 +68,19 @@
                     </div>
                 </div>
             {% endif %}
-        {% endblock %}                      
+        {% endblock %}
+        -->
+        <!--                    
         {% block searchbar %}
         <div class="item">
             <form class="">
                 <div class="field">
-                    <input type="text" class="search-query" placeholder="Find Report...">
+                    <input type="text" class="search-query" placeholder="Wyszukaj...">
                 </div>
             </form>
         </div>
         {% endblock %}
-
+        -->
         {% block navbar %}{% endblock %}                    
         </div>
       </div>
