@@ -63,8 +63,12 @@
 			{% for row in dataset.vertical %}
 			<tr>
 				{% for value in row.values %}
-				{% if value.is_header is defined and value.is_header %}{% set tag = 'th' %}{% else %}{% set tag = 'td' %}{% endif %}
-				<{{ tag }} class="{{ value.class }}">
+				{% if value.is_header is defined and value.is_header %}
+				  {% set tag = 'th' %}
+				{% else %}
+				  {% set tag = 'td' %}
+				{% endif %}
+				<{{ tag }} class="right {{ value.class }}">
                     {{ value.getValue(true)|raw }}
 				</{{ tag }}>
 				{% endfor %}
@@ -103,8 +107,8 @@
 			<tr>
 				{% if dataset.selectable is defined and inline_email is not defined %}
 					<td>
-						<div>
-							<input type='checkbox' class='selectable' style=' vertical-align:middle;' />
+						<div style="display: flex;">
+							<input type='checkbox' class='selectable' />
 							{% if not loop.last %}
 							<a href='#' class='filldown' title='Fill Down - copy this value to all rows below this' style='text-decoration:none;'>&darr;</a>
 							{% endif %}

@@ -1,10 +1,10 @@
 <div class="ui segment" style="padding-top: 130px; padding-bottom: 130px;">
 	<div class='ui active dimmer' id='lasync_notice' style="padding-top: 30px; padding-bottom: 30px;">
 		<div class="ui text loader" >
-			Your report is running.
+			Raport w trakcie generowania...
 			{% if time_estimate is defined %}
 				{% if time_estimate.median %}
-					This report usually takes {{time_estimate.median}} seconds.
+					Generowanie tego raportu zazwyczaj zabiera {{time_estimate.median}} sekund.
 				{% endif %}
 			{% endif %}
 		</div>
@@ -13,12 +13,15 @@
 <script>
 $(function() {
 	$.ajax({
-		'url': '{{report_url|raw}}',
-		'dataType': 'html',
-		'data': {'content_only': true},
-		'success': function(data) {
+		url: '{{report_url|raw}}',
+		dataType: 'html',
+		data: {'content_only': true},
+		success: function(data) {
 			$('#report_content').html(data);
 			prettyPrint();
+			if ( typeof afterAjax !== typeof undefined ) {
+			    afterAjax();
+			}
 		}
 	});
 });

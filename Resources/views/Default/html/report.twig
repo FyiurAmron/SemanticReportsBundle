@@ -183,6 +183,7 @@
             {% include "@SemanticReports/Default/html/report_content.twig" %}
         {% endif %}
     </div>
+    
 <!--
     {% block time_estimate %}
         {% if time_estimate is defined %}        
@@ -223,6 +224,18 @@
     <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.stickytableheaders.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
+    <script type='text/javascript'>
+      var afterAjax = function () {
+        $('.filldown').on('click',function() {
+  	      var input = $(this).closest('td').find('input.selectable');
+  	
+  	      $(this).closest('tr').nextAll('tr').find('input.selectable').prop('checked',input.prop('checked'));
+  	      input.trigger('change');
+  	      return false;
+        });
+      };
+    </script>
+    
     <script>
         $('.ui.pointing.dropdown').dropdown({
           on: 'hover'
