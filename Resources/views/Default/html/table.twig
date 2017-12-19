@@ -37,17 +37,6 @@
 	{% if Formatting is not defined or not Formatting[loop.index-1].nodata %}
 	<table{% if inline_email is not defined %} id='result_table_{{loop.index}}' class='result_table ui celled striped table'{% else %} border="1" cellspacing="0"{% endif %}>
 		{% if dataset.vertical is defined %}
-	<!--
-		<thead>
-			<tr class='header'>
-				{% for value in dataset.vertical[0].values %}
-				<th class="{{ value.class }}">
-					{% if loop.first %}Key{% else %}Value {{ loop.index -1 }}{% endif %}
-				</th>
-				{% endfor %}
-			</tr>
-		</thead>
-    -->
 		{% if dataset.footer is defined %}
 		<tfoot>
 			{% for row in dataset.footer %}

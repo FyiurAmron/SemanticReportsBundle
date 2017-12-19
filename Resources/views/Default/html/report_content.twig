@@ -17,7 +17,7 @@
 <script type='text/javascript'>
 $(function() {
 {% for dataset in DataSets %} 
-    {% if dataset.vertical is not defined or not nodata %}
+    {% if dataset.vertical is not defined %}
 	$('#result_table_{{loop.index}}').DataTable({
 		bPaginate: false,
 		aaSorting: [],
@@ -83,7 +83,7 @@ $(function() {
 	{% if Query_Formatted %}
 		{#<a data-role="button" data-toggle="collapse" data-target="#query_holder" href="#query_holder">show query</a>#}
 		<div class="ui accordion">
-			<div class="title">
+			<div class="title" onclick="PR.prettyPrint();">
 				<i class="dropdown icon"></i>
 				Pokaż zapytanie SQL
 			</div>

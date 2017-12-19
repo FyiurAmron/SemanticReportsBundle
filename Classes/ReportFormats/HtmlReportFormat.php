@@ -11,10 +11,13 @@ class HtmlReportFormat extends ReportFormatBase
     public static function display(Report &$report, Request &$request)
     {
         //determine if this is an asyncronous report or not
-        $report->async = !$request->query->has('content_only');
+        //$report->async = !$request->query->has('content_only');
+        /*
         if ($request->query->has('no_async')) {
             $report->async = false;
         }
+        */
+        $report->async = false;
 
         //if we're only getting the report content
         if ($request->query->has('content_only')) {
