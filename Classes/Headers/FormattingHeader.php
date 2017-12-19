@@ -38,7 +38,8 @@ class FormattingHeader extends HeaderBase
             'default' => false
         ],
         'selectable' => [
-            'type' => 'string'
+            'type' => 'string',
+            'default' => 'true'
         ],
         'dataset' => [
             'required' => true,

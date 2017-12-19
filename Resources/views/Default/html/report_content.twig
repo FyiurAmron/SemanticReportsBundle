@@ -14,6 +14,7 @@
 </div>
 
 {% if nodata is not defined or not nodata %}
+{% if DataSets is defined %}
 <script type='text/javascript'>
 $(function() {
 {% for dataset in DataSets %} 
@@ -31,7 +32,7 @@ $(function() {
 	});
 	{% endif %}
 	
-	{% if dataset.selectable %}
+	{% if dataset.selectable is defined and dataset.selectable %}
 	$('#result_table_{{loop.index}}').on('change','input.selectable',function() {
 		//determine selected inputs
 		var selected_inputs = $("input.selectable:checked",$(this).closest('table'));
@@ -73,8 +74,9 @@ $(function() {
 });
 </script>
 {% endif %}
+{% endif %}
 
-{% if terse is not defined %}
+{% if terse is not defined and Time is defined %}
 <div class="row" style="padding-top: 1.25rem;">
     <div class="col-md-12">Wygenerowanie zabrało {{Time}} sekund.</div>
 </div>

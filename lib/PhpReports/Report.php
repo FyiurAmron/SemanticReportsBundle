@@ -2,10 +2,17 @@
 
 namespace Eidsonator\SemanticReportsBundle\lib\PhpReports;
 
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\Container;
-use Eidsonator\SemanticReportsBundle\Classes\Headers;
-use Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
+use Symfony\Component\DependencyInjection\{
+  ContainerAwareTrait,
+  Container
+};
+//use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Eidsonator\SemanticReportsBundle\{
+  Classes\Headers,
+  lib\FileSystemCache\lib\FileSystemCache,
+  Controller\DefaultController
+};
 
 class Report
 {
@@ -21,7 +28,9 @@ class Report
     public $raw_query;
     public $use_cache;
 
+    protected $container;
     protected $controller;
+
     protected $baseURL;
     protected $raw;
     protected $raw_headers;
@@ -29,19 +38,20 @@ class Report
     protected $filemtime;
     protected $has_run = false;
     protected $fullPath;
-
-    public function __construct($report, $macros = array(), $environment = null, $use_cache = null, Container $container, $controller)
+    
+    public function __construct($report, $macros = array(), $environment = null, $use_cache = null,
+     Container $container, DefaultController $controller)
     {
         $this->report = $report;
         $this->container = $container;
         $this->controller = $controller;
-        $this->reportDirectory = $this->container->getParameter('reportDirectory');
-        $this->defaultFileExtensionMapping = $this->container->getParameter('default_file_extension_mapping');
-        $this->environments = $this->container->getParameter('environments');
+        $this->reportDirectory = $container->getParameter('reportDirectory');
+        $this->defaultFileExtensionMapping = $container->getParameter('default_file_extension_mapping');
+        $this->environments = $container->getParameter('environments');
         $this->config = [];
-        $this->config['report_formats'] = $this->container->getParameter('report_formats');
-        $this->config['mail_settings'] = $this->container->getParameter('mail_settings');
-        $this->fullPath = $this->container->getParameter('reportDirectory') . $this->report;
+        $this->config['report_formats'] = $container->getParameter('report_formats');
+        $this->config['mail_settings'] = $container->getParameter('mail_settings');
+        $this->fullPath = $container->getParameter('reportDirectory') . $this->report;
 
         if (!file_exists($this->fullPath)) {
             throw new \Exception('Report not found - ' . $report);
@@ -708,6 +718,8 @@ class Report
             'vars' => $this->prepareVariableForm(),
             'macros' => $this->macros,
             'config' => $this->config,
+            'userRole' => $this->controller->getUserRole(),
+            'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
         );
 
         if (is_array($additionalVars)) {
@@ -732,6 +744,8 @@ class Report
             'vars' => $this->prepareVariableForm(),
             'macros' => $this->macros,
             'config' => $this->config,
+            'userRole' => $this->controller->getUserRole(),
+            'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
         );
 
         $additional_vars = array_merge($templateVars, $additional_vars);

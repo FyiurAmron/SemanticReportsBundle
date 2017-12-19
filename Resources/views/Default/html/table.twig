@@ -1,3 +1,4 @@
+{% if DataSets is defined %}
 {% for dataset in DataSets %}
     {% if dataset.title is defined %}<h3>{{dataset.title}}</h3>{% endif %}
 	{% if DataSets|length > 1 %}
@@ -116,3 +117,5 @@
 	</table>
 	{% endif %}
 {% endfor %}
+{% endif %}
+

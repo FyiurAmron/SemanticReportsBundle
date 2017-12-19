@@ -11,10 +11,26 @@ use Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
 use Eidsonator\SemanticReportsBundle\lib\simplediff\SimpleDiff;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use AppBundle\RmSchema;
+
 class DefaultController extends Controller
 {
     private $reportDirectory;
     private $defaultFileExtensionMapping;
+
+    public function getUserRole () {
+        return $this->getUser()->getRoles()[0];
+    }
+
+    public function getUserDb () {
+        $user = $this->getUser();
+        if ( $user === null ) {
+            return new User();
+        }
+        $username = $this->getUser()->getUsername();
+
+        return RmSchema::getUserByName( $this->getDoctrine()->getManager(), $username );
+    }
     
     public function setContainer(ContainerInterface $container = null)
     {
@@ -216,13 +232,10 @@ class DefaultController extends Controller
             return $this->render($twigArray['template'], $twigArray['vars']);
         } else {
             $twigArray = nl2br($twigArray);
-            if ($type === 'Debug') {
-                return new Response("{$twigArray}");
-            } else {
+            if ($type !== 'Debug') {
                 $twigArray = preg_replace('/[ ](?=[^>]*(?:<|$))/', '&nbsp', $twigArray);
-                return new Response("<style>body{font-family: monospace;}</style><br/>{$twigArray}");
             }
-
+            return new Response("{$twigArray}");
         }
     }
 
@@ -304,8 +317,15 @@ class DefaultController extends Controller
                     'count'=>$count
                 );
             } else {
-                //files to skip
-                if (strpos(basename($report), '.') === false) {
+                $bn = basename( $report );
+                if ( strpos( $bn, '.') === false ) {
+                    continue;
+                }
+                $ur = $this->getUserRole();
+                if ( $ur === 'ROLE_CITY_COORD' && strpos( $bn, 'km' ) !== 0 ) {
+                    continue;
+                }
+                if ( $ur === 'ROLE_CAMPAIGN_COORD' && strpos( $bn, 'kk' ) !== 0 ) {
                     continue;
                 }
                 $ext = pathinfo($report, PATHINFO_EXTENSION);

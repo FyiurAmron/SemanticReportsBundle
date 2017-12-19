@@ -17,7 +17,7 @@ class FileSystemCache {
 	 * The root cache directory.  Everything will be cached relative to this directory.
 	 * @var string
 	 */
-	public static $cacheDir = '../var/cache';
+	public static $cacheDir = '../var/cache/fsc';
 	
 	/**
 	 * Generates a cache key to use with store, retrieve, getAndModify, and invalidate

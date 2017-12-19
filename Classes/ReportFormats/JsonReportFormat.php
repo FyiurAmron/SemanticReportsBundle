@@ -47,7 +47,7 @@ class JsonReportFormat extends ReportFormatBase
         }
 
         if (defined('JSON_PRETTY_PRINT')) {
-            echo json_encode($result, JSON_PRETTY_PRINT);
+            echo json_encode( $result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
         } else {
             echo json_encode($result);
         }
