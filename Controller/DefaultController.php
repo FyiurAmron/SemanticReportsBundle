@@ -112,6 +112,11 @@ class DefaultController extends Controller
         return $this->display($request, 'Html');
     }
 
+    public function displayFormattedHtmlAction(Request $request)
+    {
+        return $this->display($request, 'FormattedHtml');
+    }
+
     public function displayXmlAction(Request $request)
     {
         return $this->display($request, 'Xml');
@@ -245,10 +250,6 @@ class DefaultController extends Controller
         if (isset($_POST['preview'])) {
             $diff = new SimpleDiff();
             $html = "<pre>" . $diff->htmlDiffSummary($templateVars['contents'], $_POST['contents']) . "</pre>";
-            //$twig = clone $this->get('twig');
-            //$twig->setLoader(new \Twig_Loader_String());
-//            $env = new \Twig_Environment(new \Twig_Loader_Array([]));
-//            $template = $env->createTemplate();
             
             return new Response($html);
         } elseif (isset($_POST['save'])) {

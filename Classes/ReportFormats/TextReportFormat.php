@@ -39,6 +39,7 @@ class TextReportFormat extends ReportFormatBase
         return $return;
     }
 
+    // note: doesn't support vertical (pivot) etc. out-of-the-box, thus barely useful IMVHO
     protected static function displayDataSet($dataset)
     {
         /**

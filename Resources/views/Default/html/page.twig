@@ -7,7 +7,8 @@
 
     <!-- Le styles -->
     {% block stylesheets %}
-    <link id="bootstrap" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet">
+<!--    <link id="bootstrap" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet"> -->
+    <link id="bootstrap" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" rel="stylesheet">
     <link href="{{ asset('bundles/semanticreports/css/typeahead.js-bootstrap.css') }}" rel="stylesheet">
 	{% endblock %}
 
@@ -35,7 +36,8 @@
 	 -->
   </head>
 
-  <body>	
+  <body>
+  {% if menuless is not defined %}
     <div class="ui menu">
         <div class="ui container">
 {% block brand %}
@@ -83,10 +85,11 @@
         -->
         {% block navbar %}{% endblock %}                    
         </div>
-      </div>
+    </div>
+    {% endif %}
 
-    <div>
-        <h1 style="margin-bottom: 25px;">&nbsp;</h2>
+    <div style="padding-top: 1.25rem">
+<!--        <h1 style="margin-bottom: 25px;">&nbsp;</h2> -->
         <div class="header">
         {% block header %}
              {% if header is defined %}
@@ -131,7 +134,8 @@
     <!--[if (gte IE 9) | (!IE)]><!-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <!--<![endif]-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="{{ asset('bundles/semanticreports/js/typeahead.min.js') }}"></script>
 	<script src="{{ asset('bundles/semanticreports/js/scripts.js') }}"></script>

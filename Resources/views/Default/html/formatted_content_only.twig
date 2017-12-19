@@ -1,0 +1,98 @@
+{% set menuless = 'true' %}
+
+{% extends "@SemanticReports/Default/html/page.twig" %}
+
+{% set collapse_configuration = is_ready %}
+
+{% block title %}{{ Name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/report.css') }}' />
+    {% if not nodata is defined %}
+        <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/jquery.dataTables.css') }}' />
+    {% endif %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/daterangepicker.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/prettify.css') }}" />
+    <style>
+    /*.daterangepicker_holder {
+        background: white;
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+        -moz-box-shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+        color: #333;
+        padding: 8px;
+        line-height: 18px;
+        cursor: pointer;
+    }
+    .daterangepicker_holder .caret {
+        margin-top: 8px;
+        margin-left: 2px;
+    }*/
+    </style>
+{% endblock %}
+
+{% block header %}
+    <div class="ui container">
+        <h1 class="ui header">{{Name}}</h1>
+        {% if Description is defined and Description %}
+            <p id='report_description'>{{Description|raw}}</p>
+        {% endif %}
+
+        {% if Variables is not empty %}
+            {% set noaccordion = 'true' %}
+            {% include "@SemanticReports/Default/html/variable_form.twig" %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% set terse = 'true' %}
+    <div id='report_content' style="margin-top: 15px;">
+        {% if not is_ready %}
+            <div class='ui info message' >
+                <div class="header">
+                    <h3>Ustal niezbędne opcje przed generowaniem raportu.</h3>
+                </div>
+            </div>
+        {% elseif async %}
+            {% include "@SemanticReports/Default/html/report_ajax_loading.twig" %}
+        {% else %}
+            {% include "@SemanticReports/Default/html/report_content.twig" %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if has_charts is defined and has_charts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
+        <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.iframe-auto-height.plugin.1.9.3.min.js') }}"></script>
+    {% endif %}
+    {% if nodata is defined and not nodata  %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/dataTables.bootstrap.min.js"></script>
+    {% endif %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+    <script src="{{ asset('bundles/semanticreports/js/daterangepicker.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+    <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.stickytableheaders.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+    <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
+    <script>
+        $('.ui.pointing.dropdown').dropdown({
+          on: 'hover'
+        });
+    </script>
+    <script type="text/javascript">
+        $("#content").on('click','a[data-role="button"]',function(e) {
+            e.preventDefault();
+        });
+    </script>
+    <script>
+        {% if not is_ready %}
+        $('document').ready(function(){
+            $("#variables-header").click();
+        });
+        {% endif %}
+    </script>
+{% endblock %}

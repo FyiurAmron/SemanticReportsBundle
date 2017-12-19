@@ -114,6 +114,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('report_formats')
                     ->children()
+                        ->scalarNode('formattedHtml')->end()
                         ->scalarNode('csv')->end()
                         ->scalarNode('xlsx')->end()
                         ->scalarNode('xls')->end()
