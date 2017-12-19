@@ -7,8 +7,9 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/report.css') }}' />
-    {% if not nodata is defined %}
-        <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/jquery.dataTables.css') }}' />
+    {% if nodata is not defined or not nodata %}
+<!--        <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/jquery.dataTables.css') }}' /> -->
+        <link rel='stylesheet' href='//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css' />        
     {% endif %}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/daterangepicker.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/prettify.css') }}" />
@@ -215,8 +216,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.min.js"></script>
         <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.iframe-auto-height.plugin.1.9.3.min.js') }}"></script>
     {% endif %}
-    {% if nodata is defined and not nodata  %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/dataTables.bootstrap.min.js"></script>
+    {% if nodata is not defined or not nodata  %}
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     {% endif %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
     <script src="{{ asset('bundles/semanticreports/js/daterangepicker.min.js') }}"></script>
