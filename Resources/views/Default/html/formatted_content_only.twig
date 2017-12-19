@@ -15,24 +15,26 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/daterangepicker.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/prettify.css') }}" />
     <style>
-    /*.daterangepicker_holder {
-        background: white;
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
-        -moz-box-shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
-        color: #333;
-        padding: 8px;
-        line-height: 18px;
-        cursor: pointer;
-    }
-    .daterangepicker_holder .caret {
-        margin-top: 8px;
-        margin-left: 2px;
-    }*/
+      @media print {
+        .button {
+          display: none;
+        }
+      }
+      .button {
+        margin-left: 1rem;
+        margin-bottom: 1rem;
+      }
     </style>
 {% endblock %}
 
 {% block header %}
+    <button class="button" onclick="getContentPng();">Pobierz PNG</button>
+    <button class="button" onclick="getContentJpg();">Pobierz JPG</button>
+    <button class="button" onclick="getContentPdf();">Pobierz PDF (niska jakość)</button>
+    <button class="button" onclick="window.print();">Drukuj/renderuj</button>
+{% endblock %}
+
+{% block content %}
     <div class="ui container">
         <h1 class="ui header">{{Name}}</h1>
         {% if Description is defined and Description %}
@@ -44,9 +46,7 @@
             {% include "@SemanticReports/Default/html/variable_form.twig" %}
         {% endif %}
     </div>
-{% endblock %}
 
-{% block content %}
     {% set terse = 'true' %}
     <div id='report_content' style="margin-top: 15px;">
         {% if not is_ready %}
@@ -75,15 +75,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
     <script src="{{ asset('bundles/semanticreports/js/daterangepicker.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
-    <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.stickytableheaders.js') }}"></script>
+    <script src="{{ asset('bundles/semanticreports/js/jquery.stickytableheaders.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
-    <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
+    <script src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script> 
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+    <script src="{{ asset('bundles/semanticreports/js/html2canvas.min.js') }}"></script>
+    <script src="{{ asset('bundles/semanticreports/js/html2pdf.bundle.min.js') }}"></script>
+
     <script>
-        $('.ui.pointing.dropdown').dropdown({
-          on: 'hover'
-        });
+        function downloadAs ( name, data ) {
+            var link = document.createElement('a');
+            link.download = name;
+            link.href = data;
+            link.click();
+            //window.location.href = image;
+        }
+        
+        function getContentPng () {
+            html2canvas( document.getElementById( "content" ) ).then( canvas => {
+                var image = canvas.toDataURL( "image/png" );
+                downloadAs( "raport.png", image );
+            } );
+        }
+        function getContentJpg () {
+            html2canvas( document.getElementById( "content" ) ).then( canvas => {
+                var image = canvas.toDataURL( "image/jpeg" );
+                downloadAs( "raport.jpg", image );
+            } );
+        }
+        function getContentPdf () {
+            // var doc = new jsPDF();
+            // doc.fromHTML( $("#content").html(), 15, 15 );
+            // doc.save( "raport.pdf" );
+            html2pdf( document.getElementById( "content" ) );
+        }
     </script>
-    <script type="text/javascript">
+    
+    <script>
         $("#content").on('click','a[data-role="button"]',function(e) {
             e.preventDefault();
         });

@@ -19,6 +19,12 @@
 			window.queued_jquery_calls.push(func);
 		}
 	</script>
+	<style>
+	    .main {
+	        padding-top: 1.25rem;
+	        padding-bottom: 1.25rem;
+	    }
+	</style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -88,7 +94,7 @@
     </div>
     {% endif %}
 
-    <div style="padding-top: 1.25rem">
+    <div class="main">
 <!--        <h1 style="margin-bottom: 25px;">&nbsp;</h2> -->
         <div class="header">
         {% block header %}
