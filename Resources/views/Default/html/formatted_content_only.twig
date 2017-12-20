@@ -1,4 +1,5 @@
 {% set menuless = 'true' %}
+{% set terse = 'true' %}
 
 {% extends "@SemanticReports/Default/html/page.twig" %}
 
@@ -47,7 +48,6 @@
         {% endif %}
     </div>
 
-    {% set terse = 'true' %}
     <div id='report_content' style="margin-top: 15px;">
         {% if not is_ready %}
             <div class='ui info message' >
@@ -81,7 +81,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script> 
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
-    <script src="{{ asset('bundles/semanticreports/js/html2canvas.min.js') }}"></script>
     <script src="{{ asset('bundles/semanticreports/js/html2pdf.bundle.min.js') }}"></script>
 
     <script>
@@ -94,7 +93,9 @@
         }
         
         function getContentPng () {
-            html2canvas( document.getElementById( "content" ) ).then( canvas => {
+            html2canvas( document.getElementById( "content" ), {
+                scale: 0.2,
+              } ).then( canvas => {
                 var image = canvas.toDataURL( "image/png" );
                 downloadAs( "raport.png", image );
             } );

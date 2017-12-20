@@ -14,7 +14,7 @@
 </div>
 
 {% if nodata is not defined or not nodata %}
-{% if DataSets is defined %}
+{% if DataSets is defined and terse is not defined %}
 <script type='text/javascript'>
 $(function() {
 {% for dataset in DataSets %} 

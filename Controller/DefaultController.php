@@ -200,6 +200,13 @@ class DefaultController extends Controller
             try {
                 $report = new Report($request->query->get('report'), [], null, null, $this->container, $this);
                 $report = $className::prepareReport($report);
+                
+                $rm = $report->macros;
+                $pivot = ( isset( $rm['pivot'] ) && $rm['pivot'] === 'tak' );
+
+                foreach( $report->options['Formatting'] as &$opt ) {
+                    $opt['vertical'] = $pivot;
+                }
             } catch (\Exception $e) {
                 $error_header = 'An error occurred while preparing your report';
                 throw $e;

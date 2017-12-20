@@ -66,7 +66,7 @@ class VariableHeader extends HeaderBase
 
         //add to options
         if (!isset($report->options['Variables'])) {
-            $report->options['Variables'] = array();
+            $report->options['Variables'] = [];
         }
         $report->options['Variables'][$params['name']] = $params;
 

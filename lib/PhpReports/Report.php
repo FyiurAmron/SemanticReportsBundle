@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\{
 
 use Eidsonator\SemanticReportsBundle\{
   Classes\Headers,
+  Classes\Headers\VariableHeader,
   lib\FileSystemCache\lib\FileSystemCache,
   Controller\DefaultController
 };
@@ -305,6 +306,7 @@ class Report
     public function parseHeader($name, $value, $dataSet = null)
     {
         $className = 'Eidsonator\\SemanticReportsBundle\\Classes\\Headers\\' . $name . 'Header';
+        //'
         if (class_exists($className)) {
             if ($dataSet !== null && isset($className::$validation) && isset($className::$validation['dataset'])) {
                 $value['dataset'] = $dataSet;
@@ -389,7 +391,7 @@ class Report
         }
 
         $className = 'Eidsonator\\SemanticReportsBundle\\Classes\\ReportTypes\\' . $this->options['Type'] . 'ReportType';
-
+        //'
         if (!class_exists($className)) {
             throw new \Exception("Unknown report type '{$this->options['Type']}'");
         }
@@ -409,69 +411,81 @@ class Report
 
     public function prepareVariableForm()
     {
-        $vars = array();
+        $vars = [];
+        $tov = $this->options['Variables'];
+        if ( $tov === null ) {
+            return $vars;
+        }
 
-        if ($this->options['Variables']) {
-            foreach ($this->options['Variables'] as $var => $params) {
-                if (!is_array($params)) {
-                    continue;
-                }
-                if (!isset($params['name'])) {
-                    $params['name'] = ucwords(str_replace(array('_', '-'), ' ', $var));
-                }
-                if (!isset($params['type'])) {
-                    $params['type'] = 'string';
-                }
-                if (!isset($params['options'])) {
-                    $params['options'] = false;
-                }
-                $params['value'] = $this->macros[$var];
-                $params['key'] = $var;
+        $pivotVar = [
+          'name' => 'pivot',
+          'display' => 'Obróć tabelę',
+          'type' => 'select',
+          'options' => [ 'nie', 'tak' ],
+          'multiple' => false,
+        ];
 
-                if ($params['type'] === 'select') {
-                    $params['is_select'] = true;
-
-                    foreach ($params['options'] as $key => $option) {
-                        if (!is_array($option)) {
-                            $params['options'][$key] = array(
-                                'display' => $option,
-                                'value' => $option
-                            );
-                        }
-                        if ($params['options'][$key]['value'] == $params['value']) $params['options'][$key]['selected'] = true;
-                        elseif (is_array($params['value']) && in_array($params['options'][$key]['value'], $params['value'])) $params['options'][$key]['selected'] = true;
-                        else $params['options'][$key]['selected'] = false;
-
-                        if ($params['multiple']) {
-                            $params['is_multiselect'] = true;
-                            $params['choices'] = count($params['options']);
-                        }
-                    }
-                } else {
-                    if ($params['multiple']) {
-                        $params['is_textarea'] = true;
-                    }
-                }
-
-                if (isset($params['modifier_options'])) {
-                    $modifier_value = isset($this->macros[$var . '_modifier']) ? $this->macros[$var . '_modifier'] : null;
-
-                    foreach ($params['modifier_options'] as $key => $option) {
-                        if (!is_array($option)) {
-                            $params['modifier_options'][$key] = array(
-                                'display' => $option,
-                                'value' => $option
-                            );
-                        }
-
-                        if ($params['modifier_options'][$key]['value'] == $modifier_value) $params['modifier_options'][$key]['selected'] = true;
-                        else $params['modifier_options'][$key]['selected'] = false;
-                    }
-
-                }
-
-                $vars[] = $params;
+        VariableHeader::init( $pivotVar, $this );
+        
+        foreach ( $tov as $var => $params ) {
+            if (!is_array($params)) {
+                continue;
             }
+            if (!isset($params['name'])) {
+                $params['name'] = ucwords(str_replace(array('_', '-'), ' ', $var));
+            }
+            if (!isset($params['type'])) {
+                $params['type'] = 'string';
+            }
+            if (!isset($params['options'])) {
+                $params['options'] = false;
+            }
+            $params['value'] = $this->macros[$var];
+            $params['key'] = $var;
+
+            if ($params['type'] === 'select') {
+                $params['is_select'] = true;
+
+                foreach ($params['options'] as $key => $option) {
+                    if (!is_array($option)) {
+                        $params['options'][$key] = [
+                            'display' => $option,
+                            'value' => $option
+                        ];
+                    }
+                    $pv = $params['value'];
+                    $pokv = $params['options'][$key]['value'];
+                    $params['options'][$key]['selected'] =
+                      ( $pokv == $pv || ( is_array( $pv ) && in_array( $pokv, $pv ) ) );
+                      if ($params['multiple']) {
+                        $params['is_multiselect'] = true;
+                        $params['choices'] = count($params['options']);
+                    }
+                }
+            } else if ($params['multiple']) {
+                    $params['is_textarea'] = true;
+            }
+
+            if (isset($params['modifier_options'])) {
+                $modifier_value = isset($this->macros[$var . '_modifier'])
+                  ? $this->macros[$var . '_modifier']
+                  : null;
+
+              foreach ($params['modifier_options'] as $key => $option) {
+                    if (!is_array($option)) {
+                        $params['modifier_options'][$key] = [
+                            'display' => $option,
+                            'value' => $option
+                        ];
+                    }
+
+                    $params['modifier_options'][$key]['selected'] =
+                      ( $params['modifier_options'][$key]['value'] == $modifier_value );
+                }
+
+            }
+
+            $vars[] = $params;
         }
 
         return $vars;
@@ -505,11 +519,7 @@ class Report
 
         // Convert old single dataset format to multi-dataset format
         if (!isset($dataSets[0]['rows']) || !is_array($dataSets[0]['rows'])) {
-            $dataSets = array(
-                array(
-                    'rows' => $dataSets
-                )
-            );
+            $dataSets = [ [ 'rows' => $dataSets  ] ];
         }
 
         // Only include a subset of datasets
@@ -525,7 +535,7 @@ class Report
             }
         }
 
-        $this->options['DataSets'] = array();
+        $this->options['DataSets'] = [];
         foreach ($include as $i) {
             if (!isset($dataSets[$i])) continue;
             $this->options['DataSets'][$i] = $dataSets[$i];
@@ -708,7 +718,8 @@ class Report
 
     public function getReportVariables($additionalVars = [])
     {
-        $templateVars = array(
+        
+        $templateVars = [
             'is_ready' => $this->is_ready,
             'async' => $this->async,
             'report_url' => $this->baseURL . '?' . $_SERVER['QUERY_STRING'], //todo add base?
@@ -720,8 +731,8 @@ class Report
             'config' => $this->config,
             'userRole' => $this->controller->getUserRole(),
             'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
-        );
-
+        ];
+        
         if (is_array($additionalVars)) {
             $templateVars = array_merge($templateVars, $additionalVars);
         }
@@ -733,8 +744,8 @@ class Report
     public function renderReportPage($template = 'html/report', &$additional_vars = array())
     {
         $this->run();
-
-        $templateVars = array(
+        
+        $templateVars = [
             'is_ready' => $this->is_ready,
             'async' => $this->async,
             'report_url' => $this->baseURL . '?' . $_SERVER['QUERY_STRING'], //todo add base?
@@ -746,7 +757,7 @@ class Report
             'config' => $this->config,
             'userRole' => $this->controller->getUserRole(),
             'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
-        );
+        ];
 
         $additional_vars = array_merge($templateVars, $additional_vars);
         $additional_vars = array_merge($additional_vars, $this->options);

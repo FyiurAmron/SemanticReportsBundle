@@ -1,3 +1,7 @@
 .ui.label > .icon:last-child {
   margin: 0;
 }
+
+#content {
+  background-color: #fff;
+}
