@@ -203,6 +203,10 @@ class DefaultController extends Controller
                 
                 $rm = $report->macros;
                 $pivot = ( isset( $rm['pivot'] ) && $rm['pivot'] === 'tak' );
+                $ro = &$report->options;
+                if ( !isset( $ro['Formatting'] ) ) {
+                    $ro['Formatting'] = [];
+                }
 
                 foreach( $report->options['Formatting'] as &$opt ) {
                     $opt['vertical'] = $pivot;
