@@ -416,7 +416,7 @@ class Report
         if ( $tov === null ) {
             return $vars;
         }
-
+/*
         $pivotVar = [
           'name' => 'pivot',
           'display' => 'Obróć tabelę',
@@ -426,7 +426,7 @@ class Report
         ];
 
         VariableHeader::init( $pivotVar, $this );
-        
+*/        
         foreach ( $tov as $var => $params ) {
             if (!is_array($params)) {
                 continue;
@@ -729,6 +729,7 @@ class Report
             'vars' => $this->prepareVariableForm(),
             'macros' => $this->macros,
             'config' => $this->config,
+            
             'userRole' => $this->controller->getUserRole(),
             'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
         ];
@@ -755,13 +756,13 @@ class Report
             'vars' => $this->prepareVariableForm(),
             'macros' => $this->macros,
             'config' => $this->config,
+            
             'userRole' => $this->controller->getUserRole(),
             'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
         ];
 
         $additional_vars = array_merge($templateVars, $additional_vars);
         $additional_vars = array_merge($additional_vars, $this->options);
-
     }
     
     public function expandSql($sql, $macros) {

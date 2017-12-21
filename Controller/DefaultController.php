@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Eidsonator\SemanticReportsBundle\lib\FileSystemCache\lib\FileSystemCache;
 use Eidsonator\SemanticReportsBundle\lib\simplediff\SimpleDiff;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Eidsonator\SemanticReportsBundle\Classes\Headers\VariableHeader;
 
 use AppBundle\RmSchema;
 
@@ -192,31 +193,47 @@ class DefaultController extends Controller
         $error_header = 'An error occurred while running your report';
         $content = '';
 
+        $pivotVar = [
+          'name' => 'pivot',
+          'display' => 'Obróć tabelę',
+          'type' => 'select',
+          'options' => [ 'nie', 'tak' ],
+          'multiple' => false,
+          'default' => 'nie'
+        ];
+
         try {
             if (!class_exists($className)) {
                 $error_header = 'Unknown report format';
                 throw new \Exception("Unknown report format '$type'");
             }
             try {
+            
                 $report = new Report($request->query->get('report'), [], null, null, $this->container, $this);
+
                 $report = $className::prepareReport($report);
                 
+                VariableHeader::init( $pivotVar, $report );
+
                 $rm = $report->macros;
                 $pivot = ( isset( $rm['pivot'] ) && $rm['pivot'] === 'tak' );
+
                 $ro = &$report->options;
                 if ( !isset( $ro['Formatting'] ) ) {
-                    $ro['Formatting'] = [];
+                    $ro['Formatting'] = [ [ 'dataset' => true, 'nodata' => false, ] ];
                 }
-
                 foreach( $report->options['Formatting'] as &$opt ) {
                     $opt['vertical'] = $pivot;
                 }
+                
             } catch (\Exception $e) {
                 $error_header = 'An error occurred while preparing your report';
                 throw $e;
             }
+            $report->headers[] = 'Formatting';
 
             $twigArray = $className::display($report, $request);
+
             if (is_array($twigArray)) {
                 $reportURL =  $this->generateUrl('eidsonator_generate_report');
                 $report->setBaseURL($reportURL);
@@ -226,18 +243,16 @@ class DefaultController extends Controller
 
 
         } catch (\Exception $e) {
-            if (isset($report)) {
-                $title = $report->report;
-            } else {
-                $title = 'broken';
-            }
-            return $this->render('@SemanticReports/Default/html/page.twig', array(
+            dump( $e );
+            $title = ( isset($report) ) ? $report->report : 'broken';
+
+            return $this->render('@SemanticReports/Default/html/page.twig', [
                 'title'=> $title,
                 'header'=>'<h2>'.$error_header.'</h2>',
                 'error'=>$e->getMessage(),
                 'content'=>$content,
-                'breadcrumb'=>array('Report List' => '', $title => true)
-            ));
+                'breadcrumb'=>['Report List' => '', $title => true]
+            ]);
         }
         if (isset($twigArray['template'])) {
             return $this->render($twigArray['template'], $twigArray['vars']);
