@@ -9,9 +9,9 @@
     {% endif %}
 {% endblock %}
 
-<div style="overflow-x: scroll">
+<script type="text/javascript" src="{{ asset('bundles/semanticreports/js/chartinator.js') }}"></script>
+
 {% include "@SemanticReports/Default/html/table.twig" %}
-</div>
 
 {% if nodata is not defined or not nodata %}
 {% if DataSets is defined and terse is not defined %}

@@ -1,5 +1,14 @@
 {% if DataSets is defined %}
 {% for dataset in DataSets %}
+	{% if dataset.vertical is defined %}
+	{% set ds = dataset.vertical %}
+	{% set dsOffset = 0 %}
+	{% else %}
+	{% set ds = dataset.rows %}
+	{% set dsOffset = 1 %}
+	{% endif %}
+
+    {% set dsNr = loop.index %}
     {% if dataset.title is defined %}<h3>{{dataset.title}}</h3>{% endif %}
 	{% if DataSets|length > 1 %}
 		{% block table_download_link %}
@@ -36,7 +45,14 @@
 		{% endblock %}
 	{% endif %}
 	{% if Formatting is not defined or not Formatting[loop.index-1].nodata %}
-	<table{% if inline_email is not defined %} id='result_table_{{loop.index}}' class='result_table ui celled striped table'{% else %} border="1" cellspacing="0"{% endif %}>
+	{% if macros.displayType != 'tabela' %}
+	  {% for row in ds %}
+        <div id="result_chart_{{ dsNr }}_{{ loop.index }}" style="margin-bottom: 1rem;"></div>
+      {% endfor %}
+	{% endif %}
+    <div class="table-wrapper">
+	  <table{% if inline_email is not defined %} id='result_table_{{loop.index}}'
+	    class='result_table ui celled striped table'{% else %} border="1" cellspacing="0"{% endif %}>
 		{% if dataset.vertical is defined %}
 		{% if dataset.footer is defined %}
 		<tfoot>
@@ -115,7 +131,42 @@
 		</tbody>
 		{% endif %}
 	</table>
+	{% if macros.displayType != 'tabela' %}
+    {% for row in ds %}	
+	<script>
+    var ignores = [];
+    for ( var i = 1; i < {{ ds|length + dsOffset }}; i++ ) {
+        if ( i !== {{ loop.index }} ) {
+            ignores.push(i);
+        }
+    }
+
+	$('#result_chart_{{ dsNr }}_{{ loop.index }}').chartinator( {
+      chartType: 'ColumnChart',
+      
+      dataTitle: '',
+      tableSel: '#result_table_{{ dsNr }}',
+    {% if macros.pivotChart == 'tak' and macros.pivot == 'nie' %}
+      ignoreCol: ignores,    
+    {% else %}
+      ignoreRow: ignores,
+    {% endif %}
+    {% if macros.pivotChart == 'tak' %}
+      transpose: true,
+    {% endif %}
+	{% if macros.displayType != 'wykres' %}
+      showTable: 'show',
 	{% endif %}
+      columnChart: {
+          legend: { position: 'right', alignment: 'center' },
+          chartArea: { left: '10%', top: '10%', width: '70%', height: '80%' },
+      },	
+    } );
+    </script>
+    {% endfor %}
+    {% endif %}
+  </div>	
+  {% endif %}
 {% endfor %}
 {% endif %}
 

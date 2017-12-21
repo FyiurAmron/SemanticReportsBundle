@@ -8,8 +8,7 @@
     {{ parent() }}
     <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/report.css') }}' />
     {% if nodata is not defined or not nodata %}
-<!--        <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/jquery.dataTables.css') }}' /> -->
-        <link rel='stylesheet' href='//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css' />        
+        <link rel='stylesheet' href='//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css' />
     {% endif %}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/daterangepicker.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/prettify.css') }}" />
@@ -225,6 +224,7 @@
     <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/jquery.stickytableheaders.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
+    
     <script type='text/javascript'>
       var afterAjax = function () {
         $('.filldown').on('click',function() {

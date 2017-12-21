@@ -193,9 +193,27 @@ class DefaultController extends Controller
         $error_header = 'An error occurred while running your report';
         $content = '';
 
+        $displayTypeVar = [
+          'name' => 'displayType',
+          'display' => 'Sposób prezentacji',
+          'type' => 'select',
+          'options' => [ 'tabela', 'wykres', 'tabela i wykres' ],
+          'multiple' => false,
+          'default' => 'tabela'
+        ];
+
         $pivotVar = [
           'name' => 'pivot',
           'display' => 'Obróć tabelę',
+          'type' => 'select',
+          'options' => [ 'nie', 'tak' ],
+          'multiple' => false,
+          'default' => 'nie'
+        ];
+
+        $pivotChartVar = [
+          'name' => 'pivotChart',
+          'display' => 'Obróć wykres',
           'type' => 'select',
           'options' => [ 'nie', 'tak' ],
           'multiple' => false,
@@ -213,7 +231,9 @@ class DefaultController extends Controller
 
                 $report = $className::prepareReport($report);
                 
+                VariableHeader::init( $displayTypeVar, $report );
                 VariableHeader::init( $pivotVar, $report );
+                VariableHeader::init( $pivotChartVar, $report );
 
                 $rm = $report->macros;
                 $pivot = ( isset( $rm['pivot'] ) && $rm['pivot'] === 'tak' );
@@ -254,6 +274,7 @@ class DefaultController extends Controller
                 'breadcrumb'=>['Report List' => '', $title => true]
             ]);
         }
+        dump( $twigArray['vars'] );
         if (isset($twigArray['template'])) {
             return $this->render($twigArray['template'], $twigArray['vars']);
         } else {

@@ -11,7 +11,7 @@
     {{ parent() }}
     <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/report.css') }}' />
     {% if not nodata is defined %}
-        <link rel='stylesheet' href='{{ asset('bundles/semanticreports/css/jquery.dataTables.css') }}' />
+        <link rel='stylesheet' href='//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css' />
     {% endif %}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/daterangepicker.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/semanticreports/css/prettify.css') }}" />
@@ -31,8 +31,8 @@
 {% block header %}
     <button class="button" onclick="getContentPng();">Pobierz PNG</button>
     <button class="button" onclick="getContentJpg();">Pobierz JPG</button>
-    <button class="button" onclick="getContentPdf();">Pobierz PDF (niska jakość)</button>
-    <button class="button" onclick="window.print();">Drukuj/renderuj</button>
+{#    <button class="button" onclick="getContentPdf();">Pobierz PDF (niska jakość)</button> #}
+    <button class="button" onclick="window.print();">Drukuj/renderuj PDF</button>
 {% endblock %}
 
 {% block content %}
@@ -80,21 +80,49 @@
     <script src="{{ asset('bundles/semanticreports/js/lang-sql.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script> 
+    <script src="{{ asset('bundles/semanticreports/js/html2canvas.js') }}"></script>
+<!--
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     <script src="{{ asset('bundles/semanticreports/js/html2pdf.bundle.min.js') }}"></script>
+-->
+{% if nodata is not defined or not nodata %}
+{% if DataSets is defined and terse is not defined %}
+<script type='text/javascript'>
+$(function() {
+{% for dataset in DataSets %} 
+    {% if dataset.vertical is not defined %}
+	$('#result_table_{{loop.index}}').DataTable({
+		bPaginate: false,
+		aaSorting: [],
+		"sDom": "<'row'<'col-md-6'fi>r>t",
+		language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Polish.json"
+        }
+	});
+	$('#result_table_{{loop.index}}').stickyTableHeaders({
+		fixedOffset: $('.navbar-fixed-top')
+	});
+	{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
 
     <script>
         function downloadAs ( name, data ) {
             var link = document.createElement('a');
             link.download = name;
             link.href = data;
+            link.style.display = 'none';
+            document.body.appendChild( link );
             link.click();
+            
+            // older, more 'compatible' (and ugly) way:
             //window.location.href = image;
         }
         
         function getContentPng () {
             html2canvas( document.getElementById( "content" ), {
-                scale: 0.2,
+                scale: 4.0,
               } ).then( canvas => {
                 var image = canvas.toDataURL( "image/png" );
                 downloadAs( "raport.png", image );
@@ -110,7 +138,7 @@
             // var doc = new jsPDF();
             // doc.fromHTML( $("#content").html(), 15, 15 );
             // doc.save( "raport.pdf" );
-            html2pdf( document.getElementById( "content" ) );
+            //html2pdf( document.getElementById( "content" ) );
         }
     </script>
     
