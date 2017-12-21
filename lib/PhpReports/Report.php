@@ -718,6 +718,8 @@ class Report
 
     public function getReportVariables($additionalVars = [])
     {
+    
+        $city = $this->controller->getUserDb()->lastContext->city;
         
         $templateVars = [
             'is_ready' => $this->is_ready,
@@ -731,7 +733,7 @@ class Report
             'config' => $this->config,
             
             'userRole' => $this->controller->getUserRole(),
-            'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
+            'userCity' => ( $city !== null ) ? $city->cityName : '',
         ];
         
         if (is_array($additionalVars)) {
@@ -745,6 +747,8 @@ class Report
     public function renderReportPage($template = 'html/report', &$additional_vars = array())
     {
         $this->run();
+
+        $city = $this->controller->getUserDb()->lastContext->city;
         
         $templateVars = [
             'is_ready' => $this->is_ready,
@@ -758,7 +762,7 @@ class Report
             'config' => $this->config,
             
             'userRole' => $this->controller->getUserRole(),
-            'userCity' => $this->controller->getUserDb()->lastContext->city->cityName,
+            'userCity' => ( $city !== null ) ? $city->cityName : '',
         ];
 
         $additional_vars = array_merge($templateVars, $additional_vars);
