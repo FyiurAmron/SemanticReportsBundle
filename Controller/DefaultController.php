@@ -274,7 +274,6 @@ class DefaultController extends Controller
                 'breadcrumb'=>['Report List' => '', $title => true]
             ]);
         }
-        dump( $twigArray['vars'] );
         if (isset($twigArray['template'])) {
             return $this->render($twigArray['template'], $twigArray['vars']);
         } else {
