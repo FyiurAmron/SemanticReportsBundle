@@ -31,8 +31,7 @@
 	
 	<style>
 	    .main {
-	        padding-top: 1.25rem;
-	        padding-bottom: 1.25rem;
+	        padding: 1rem;
 	    }
 	</style>
 
@@ -46,14 +45,16 @@
   <body>
   {% if menuless is not defined %}
     <div class="ui menu">
-        <div class="ui container">
+        <div class="">
 {% block brand %}
+        <!--
             <a class="header item" href="/rm-panel">
                 <div style="text-align: center;">
                     <img src="/img/rm.svg" alt="RowerowyMaj" style="display: block;" />
                     Powrót do panelu
                 </div>
             </a>                
+        -->
 {% endblock %}
 
             <a class="header item" href="{{ url('eidsonator_reports_homepage') }}">

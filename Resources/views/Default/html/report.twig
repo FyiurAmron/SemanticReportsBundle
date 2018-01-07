@@ -31,7 +31,7 @@
 {% endblock %}
 
 {% block header %}
-    <div class="ui container">
+    <div class="">
         <h1 class="ui header">{{Name}}</h1>
         {% if Description is defined and Description %}
             <p id='report_description'>{{Description|raw}}</p>
@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="ui container">
+    <div class="">
     {% if is_ready %}
         <div class='ui export_links'>
         {% block export_links %}
@@ -60,7 +60,7 @@
                                     {% if config.report_formats[format] == 'divider' %}
                                         <div class="divider"></div>
                                     {% else %}
-                                        <a class="item" href='{{ url('eidsonator_report_path') }}/{{format}}?{% if DataSets is defined and DataSets|length > 1 %}datasets=all&{% endif %}{{report_querystring}}' class='report_link'>{{config.report_formats[format]}}</a>
+                                        <a class="item" target="_blank" href='{{ url('eidsonator_report_path') }}/{{format}}?{% if DataSets is defined and DataSets|length > 1 %}datasets=all&{% endif %}{{report_querystring}}' class='report_link'>{{config.report_formats[format]}}</a>
                                     {% endif %}
                                 {% endfor %}
                             </div>
