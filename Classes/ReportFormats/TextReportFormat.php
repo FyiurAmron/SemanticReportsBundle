@@ -10,9 +10,7 @@ class TextReportFormat extends ReportFormatBase
 {
     public static function display(Report &$report, Request &$request)
     {
-        header("Content-type: text/plain");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        parent::defaultHeaders( $report, 'text/plain', '.txt' );
 
         $report->use_cache = true;
 

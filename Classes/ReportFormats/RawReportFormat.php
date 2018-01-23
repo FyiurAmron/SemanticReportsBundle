@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RawReportFormat extends ReportFormatBase {
     public static function display(Report &$report, Request &$request)
     {
-        header("Content-type: text/plain");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        parent::defaultHeaders( $report, 'text/plain', '.txt' );
 
         echo nl2br($report->content);
     }

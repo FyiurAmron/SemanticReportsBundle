@@ -10,11 +10,9 @@ class XmlReportFormat extends ReportFormatBase
 {
     public static function display(Report &$report, Request &$request)
     {
-        header("Content-type: application/xml");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        parent::defaultHeaders( $report, 'application/xml', '.xml' );
 
-        $datasets = array();
+        $datasets = [];
         $dataset_format = false;
 
         if (isset($_GET['datasets'])) {
@@ -35,7 +33,7 @@ class XmlReportFormat extends ReportFormatBase
             }
             $i = intval($i);
 
-            $datasets = array($i);
+            $datasets = [ $i ];
         }
         $vars = [
             'datasets' => $datasets,
@@ -43,6 +41,7 @@ class XmlReportFormat extends ReportFormatBase
         ];
         $template = '@SemanticReports/Default/xml/report.twig';
         $report->renderReportPage($template, $vars);
-        return ["template" => $template, "vars" => $vars];
+        
+        return [ 'template' => $template, 'vars' => $vars ];
     }
 }

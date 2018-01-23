@@ -9,18 +9,15 @@ class JsonReportFormat extends ReportFormatBase
 {
     public static function display(Report &$report, Request &$request)
     {
-        header("Content-type: application/json");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        parent::defaultHeaders( $report, 'application/json', '.json' );
 
-        //run the report
         $report->run();
 
         if (!$report->options['DataSets']) {
             return;
         }
 
-        $result = array();
+        $result = [];
         if (isset($_GET['datasets'])) {
             $datasets = $_GET['datasets'];
             // If all the datasets should be included
@@ -46,23 +43,22 @@ class JsonReportFormat extends ReportFormatBase
             $result = $dataset['rows'];
         }
 
-        if (defined('JSON_PRETTY_PRINT')) {
-            echo json_encode( $result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
-        } else {
-            echo json_encode($result);
-        }
+        echo json_encode( $result, defined( 'JSON_PRETTY_PRINT' )
+            ? JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+            : 0
+          );
     }
 
     public static function getDataSet($i, &$report)
     {
-        $dataset = array();
+        $dataset = [];
         foreach ($report->options['DataSets'][$i] as $k => $v) {
             $dataset[$k] = $v;
         }
 
         $rows = array();
         foreach ($dataset['rows'] as $i => $row) {
-            $tmp = array();
+            $tmp = [];
             foreach ($row['values'] as $key => $value) {
                 $tmp[$value->key] = $value->getValue();
             }

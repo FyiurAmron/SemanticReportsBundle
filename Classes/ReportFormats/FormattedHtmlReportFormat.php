@@ -28,12 +28,12 @@ class FormattedHtmlReportFormat extends ReportFormatBase
                 $template = '@SemanticReports/Default/html/blank_page.twig';
             }
 
-            $vars = array(
+            $vars = [
                 'title'=>$report->report,
                 'header'=>'<h2>There was an error running your report</h2>',
                 'error'=>$e->getMessage(),
                 'content'=>"<h2>Report Query</h2>".$report->options['Query_Formatted'],
-            );
+            ];
 
             return ["template" => $template, "vars" => $vars];
 

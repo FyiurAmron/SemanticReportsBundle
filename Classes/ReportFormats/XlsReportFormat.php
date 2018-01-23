@@ -3,34 +3,13 @@
 namespace Eidsonator\SemanticReportsBundle\Classes\ReportFormats;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Eidsonator\SemanticReportsBundle\lib\PhpReports\Report;
 
 class XlsReportFormat extends XlsReportBase {
 
-    public static function display(Report &$report, Request &$request)
-    {
-        // First let set up some headers
-        $file_name = preg_replace(array('/[\s]+/', '/[^0-9a-zA-Z\-_\.]/'), array('_', ''), $report->options['Name']);
-
-        //always use cache for Excel reports
-        $report->use_cache = true;
-
-        //run the report
-        $report->run();
-
-        if (!$report->options['DataSets']) {
-            return;
-        }
-
-        $objPHPExcel = parent::getExcelRepresantation($report);
-
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$file_name.'.xls"');
-        header('Pragma: no-cache');
-        header('Expires: 0');
-
-        $objWriter->save('php://output');
+    public static function display( Report &$report, Request &$request ) {
+        parent::displayEx( $report, $request,
+            'Excel5', 'application/vnd.ms-excel', '.xls' );
     }
 }

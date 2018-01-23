@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 class SqlReportFormat extends ReportFormatBase {
     public static function display(Report &$report, Request &$request)
     {
-        header("Content-type: text/plain");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        parent::defaultHeaders( $report, 'application/sql', '.sql' );
+
         $vars = [];
         $template = '@SemanticReports/Default/sql/report.twig';
         $report->renderReportPage($template, $vars);
-        return ["template" => $template, "vars" => $vars];
+        
+        return [ 'template' => $template, 'vars' => $vars ];
     }
 }

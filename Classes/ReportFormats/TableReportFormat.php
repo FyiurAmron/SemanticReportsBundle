@@ -18,6 +18,7 @@ class TableReportFormat extends ReportFormatBase
             $report->renderReportPage($template, $vars);
         } catch (\Exception $e) {
         }
-        return ["template" => $template, "vars" => $vars];
+        
+        return [ 'template' => $template, 'vars' => $vars ];
     }
 }
