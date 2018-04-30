@@ -23,7 +23,7 @@ class FormattedHtmlReportFormat extends ReportFormatBase
             $report->renderReportPage($template, $additional_vars);
             return ["template" => $template, "vars" => $additional_vars];
         } catch (\Exception $e) {
-            dump( $e );
+            // dump( $e );
             if ($request->query->has('content_only')) {
                 $template = '@SemanticReports/Default/html/blank_page.twig';
             }

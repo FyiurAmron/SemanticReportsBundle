@@ -263,7 +263,7 @@ class DefaultController extends Controller
 
 
         } catch (\Exception $e) {
-            dump( $e );
+            // dump( $e );
             $title = ( isset($report) ) ? $report->report : 'broken';
 
             return $this->render('@SemanticReports/Default/html/page.twig', [
@@ -302,7 +302,7 @@ class DefaultController extends Controller
             ];
             $templateVars = $report->getReportVariables($templateVars);
         } catch (\Exception $e) { //if there is an error parsing the report
-            dump( $report );
+            // dump( $report );
             $templateVars['error'] = $e;
         }
 
@@ -391,7 +391,7 @@ class DefaultController extends Controller
                         $return[] = $data;
                     }
                 } catch (\Exception $e) {
-                    dump( $e );
+                    // dump( $e );
                     $errors[] = [
                         'report' => $name,
                         'exception' => $e
