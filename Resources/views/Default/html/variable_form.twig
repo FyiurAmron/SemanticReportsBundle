@@ -129,14 +129,14 @@ $(function() {
 		range_holder.daterangepicker(
 			{
 				ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(2, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month').subtract(1, 'days'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month').subtract(1, 'days'), moment().subtract(1, 'month').endOf('month')],
-                    'Year to Date': [moment().startOf('year'), moment()],
-                    'Last Year': [moment().startOf('year').subtract(1, 'years'), moment().startOf('year').subtract(1, 'days')]
+                    'Wczoraj': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Przedwcz.': [moment().subtract(2, 'days'), moment().subtract(2, 'days')],
+                    'Ostatnie 7 dni': [moment().subtract(7, 'days'), moment().subtract(1, 'days')],
+                    'Ostatnie 30 dni': [moment().subtract(30, 'days'), moment().subtract(1, 'days')],
+                    'Ten miesiąc': [moment().startOf('month').subtract(1, 'days'), moment().endOf('month')],
+                    'Poprz. miesiąc': [moment().subtract(1, 'month').startOf('month').subtract(1, 'days'), moment().subtract(1, 'month').endOf('month')],
+                    'Ten rok': [moment().startOf('year'), moment()],
+                    'Poprz. rok': [moment().startOf('year').subtract(1, 'years'), moment().startOf('year').subtract(1, 'days')]
 				},
                 showWeekNumbers: true,
                 showDropdowns: true,
